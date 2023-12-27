@@ -1,0 +1,65 @@
+# Node.js
+backend/node_modules/
+
+# Dart
+code/.dart_tool/
+code/.packages
+code/.flutter-plugins
+
+# Android
+code/android/.gradle/
+code/android/local.properties
+code/android/**/build/
+
+# iOS
+code/ios/.symlinks/
+code/ios/Flutter/Flutter.framework/
+code/ios/Flutter/Flutter.podspec
+code/ios/Flutter/App.framework
+code/ios/Flutter/FlutterPluginRegistrant/
+code/ios/Runner.xcworkspace/
+code/ios/**/Pods/
+code/ios/**/.symlinks/
+code/ios/**/profile/
+code/ios/**/xcuserdata/
+
+# macOS
+code/macos/.symlinks/
+code/macos/Flutter/ephemeral/
+code/macos/Flutter/Flutter.framework
+code/macos/Flutter/Flutter.podspec
+code/macos/Flutter/App.framework
+code/macos/Flutter/FlutterPluginRegistrant/
+code/macos/**/Pods/
+code/macos/**/.symlinks/
+code/macos/**/profile/
+code/macos/**/xcuserdata/
+
+# Linux
+code/linux/flutter/
+code/linux/flutter_embedding/
+code/linux/cmake_build/
+code/linux/.dart_tool/
+
+# Windows
+code/windows/flutter/
+code/windows/flutter_embedding/
+code/windows/cmake_build/
+code/windows/.dart_tool/
+
+# Web
+code/web/flutter/
+code/web/flutter_embedding/
+code/web/.dart_tool/
+
+# General
+*.DS_Store
+*.idea/
+*.vscode/
+*.log
+*.tmp
+*.tmp.*
+log.txt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
