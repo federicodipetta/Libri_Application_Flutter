@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ComuniService {
-  static String url = "192.168.1.12:3000";
+  static String url = "10.0.20.21:3000";
   static Future<List<Comune>> getComuni() async {
     var response = await http.get(Uri.http(url, "/comuni"));
     if (response.statusCode == 200) {

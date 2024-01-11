@@ -2,10 +2,10 @@ import "package:http/http.dart" as http;
 import "dart:convert";
 
 class LibriService {
-  static String url = "192.168.1.3:3000";
+  static String url = "192.168.1.50:3000";
 
   static Future<Libro> getLibro(String isbn) async {
-    var response = await http.get(Uri.http(url, "/api/v0/libro"));
+    var response = await http.get(Uri.http(url, "/api/v0/libro" + isbn));
     if (response.statusCode == 200) {
       Libro libro = Libro(isbn: "", titolo: "", autore: "");
       try {
@@ -21,7 +21,7 @@ class LibriService {
   }
 
   static void addLibro(String isbn) async {
-    await http.post(Uri.http(url, "/api/v0/libri"),
+    await http.post(Uri.http(url, "/api/v0/libro"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"isbn": isbn}));
   }
