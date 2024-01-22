@@ -1,5 +1,5 @@
 # Node.js
-backend/node_modules/
+backend/express/node_modules/
 
 # Dart
 code/.dart_tool/
