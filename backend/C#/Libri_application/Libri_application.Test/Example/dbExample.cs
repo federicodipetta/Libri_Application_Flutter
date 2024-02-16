@@ -15,10 +15,10 @@ namespace Libri_application.Test.Example
             var ctx = new MyDbContext();
             Libro libro = new Libro();
             libro.id = "1";
-            libro.autore = "autore";
+            libro.autori = "autore";
             libro.titolo = "titolo";
             libro.editore = "editore";
-            libro.dataPubblicazione = DateTime.Now;
+            libro.anno = "2024";
             libro.descrizione = "descrizione";
             ctx.Set<Libro>().Add(libro);
             ctx.SaveChanges();

@@ -19,6 +19,8 @@ namespace Libri_application.Test.Example
             recensione.libro = libro;
             recensione.utente = utente;
             recensione.recensione = "recensione";
+            recensione.voto = 5;
+            recensione.stato = StatoRecensione.DA_COMPRARE;
             ctx.Set<Recensione>().Add(recensione);
             ctx.SaveChanges();
         }

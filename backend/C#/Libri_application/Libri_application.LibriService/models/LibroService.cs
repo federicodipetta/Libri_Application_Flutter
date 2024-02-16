@@ -28,42 +28,42 @@ namespace Libri_application.LibriService.models
 
     public class Volumeinfo
     {
-        public string title { get; set; }
-        public string[] authors { get; set; }
-        public string publishedDate { get; set; }
-        public string description { get; set; }
-        public Industryidentifier[] industryIdentifiers { get; set; }
-        public Readingmodes readingModes { get; set; }
-        public int pageCount { get; set; }
-        public string printType { get; set; }
-        public string[] categories { get; set; }
-        public string maturityRating { get; set; }
-        public bool allowAnonLogging { get; set; }
-        public string contentVersion { get; set; }
-        public Panelizationsummary panelizationSummary { get; set; }
-        public Imagelinks imageLinks { get; set; }
-        public string language { get; set; }
-        public string previewLink { get; set; }
-        public string infoLink { get; set; }
-        public string canonicalVolumeLink { get; set; }
+        public string? title { get; set; }
+        public string[]? authors { get; set; }
+        public string? publishedDate { get; set; }
+        public string? description { get; set; }
+        public Industryidentifier[]? industryIdentifiers { get; set; }
+        public Readingmodes? readingModes { get; set; }
+        public int? pageCount { get; set; }
+        public string? printType { get; set; }
+        public string[]? categories { get; set; }
+        public string? maturityRating { get; set; }
+        public bool? allowAnonLogging { get; set; }
+        public string? contentVersion { get; set; }
+        public Panelizationsummary? panelizationSummary { get; set; }
+        public Imagelinks? imageLinks { get; set; }
+        public string? language { get; set; }
+        public string? previewLink { get; set; }
+        public string? infoLink { get; set; }
+        public string? canonicalVolumeLink { get; set; }
     }
 
     public class Readingmodes
     {
-        public bool text { get; set; }
-        public bool image { get; set; }
+        public bool? text { get; set; }
+        public bool? image { get; set; }
     }
 
     public class Panelizationsummary
     {
-        public bool containsEpubBubbles { get; set; }
-        public bool containsImageBubbles { get; set; }
+        public bool? containsEpubBubbles { get; set; }
+        public bool? containsImageBubbles { get; set; }
     }
 
     public class Imagelinks
     {
-        public string smallThumbnail { get; set; }
-        public string thumbnail { get; set; }
+        public string? smallThumbnail { get; set; }
+        public string? thumbnail { get; set; }
     }
 
     public class Industryidentifier

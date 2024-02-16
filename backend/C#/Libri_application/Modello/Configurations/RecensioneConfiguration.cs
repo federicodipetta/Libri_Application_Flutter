@@ -12,10 +12,11 @@ namespace Libri_application.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Entities.Recensione> builder)
         {
-            builder.ToTable("RelazioneUtenteLibro");
+            builder.ToTable("Recensione");
             builder.HasKey(k => new { k.idLibro, k.idUtente });
             builder.HasOne(f => f.libro).WithMany().HasForeignKey(f => f.idLibro);
             builder.HasOne(f => f.utente).WithMany().HasForeignKey(f => f.idUtente);
+            builder.Property(x => x.stato).HasConversion<int>();
         }
     }
 

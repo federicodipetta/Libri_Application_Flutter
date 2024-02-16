@@ -14,6 +14,7 @@ namespace Libri_application.Models.Configurations
         {
             builder.ToTable("Utente");
             builder.HasKey(k => k.id);
+            builder.Property(k => k.id).ValueGeneratedOnAdd();
             
         }
     }

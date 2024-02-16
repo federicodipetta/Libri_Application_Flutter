@@ -19,7 +19,7 @@ namespace Libri_application.Models.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=Libri;User Id=manager;Password=a;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=LibriApplication;User Id=manager;Password=a;Trusted_Connection=True;TrustServerCertificate=True;");
             base.OnConfiguring(optionsBuilder);
         }
 

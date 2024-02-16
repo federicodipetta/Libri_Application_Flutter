@@ -14,6 +14,10 @@ namespace Libri_application.Models.Entities
         public Utente utente { get; set; }
         public string recensione { get; set; }
 
+        public int voto { get; set; }
+
+        public StatoRecensione stato { get; set; }
+
         
 
     }

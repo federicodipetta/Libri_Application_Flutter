@@ -1,246 +1,104 @@
-USE [master]
+USE [LibriApplication]
 GO
-
-/****** Object:  Database [Libri]    Script Date: 23/01/2024 23:05:45 ******/
-CREATE DATABASE [Libri]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'Libri', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Libri.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'Libri_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\Libri_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
-GO
-
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [Libri].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-
-ALTER DATABASE [Libri] SET ANSI_NULL_DEFAULT OFF 
-GO
-
-ALTER DATABASE [Libri] SET ANSI_NULLS OFF 
-GO
-
-ALTER DATABASE [Libri] SET ANSI_PADDING OFF 
-GO
-
-ALTER DATABASE [Libri] SET ANSI_WARNINGS OFF 
-GO
-
-ALTER DATABASE [Libri] SET ARITHABORT OFF 
-GO
-
-ALTER DATABASE [Libri] SET AUTO_CLOSE OFF 
-GO
-
-ALTER DATABASE [Libri] SET AUTO_SHRINK OFF 
-GO
-
-ALTER DATABASE [Libri] SET AUTO_UPDATE_STATISTICS ON 
-GO
-
-ALTER DATABASE [Libri] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-
-ALTER DATABASE [Libri] SET CURSOR_DEFAULT  GLOBAL 
-GO
-
-ALTER DATABASE [Libri] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-
-ALTER DATABASE [Libri] SET NUMERIC_ROUNDABORT OFF 
-GO
-
-ALTER DATABASE [Libri] SET QUOTED_IDENTIFIER OFF 
-GO
-
-ALTER DATABASE [Libri] SET RECURSIVE_TRIGGERS OFF 
-GO
-
-ALTER DATABASE [Libri] SET  DISABLE_BROKER 
-GO
-
-ALTER DATABASE [Libri] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-
-ALTER DATABASE [Libri] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-
-ALTER DATABASE [Libri] SET TRUSTWORTHY OFF 
-GO
-
-ALTER DATABASE [Libri] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-
-ALTER DATABASE [Libri] SET PARAMETERIZATION SIMPLE 
-GO
-
-ALTER DATABASE [Libri] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-
-ALTER DATABASE [Libri] SET HONOR_BROKER_PRIORITY OFF 
-GO
-
-ALTER DATABASE [Libri] SET RECOVERY FULL 
-GO
-
-ALTER DATABASE [Libri] SET  MULTI_USER 
-GO
-
-ALTER DATABASE [Libri] SET PAGE_VERIFY CHECKSUM  
-GO
-
-ALTER DATABASE [Libri] SET DB_CHAINING OFF 
-GO
-
-ALTER DATABASE [Libri] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
-GO
-
-ALTER DATABASE [Libri] SET TARGET_RECOVERY_TIME = 60 SECONDS 
-GO
-
-ALTER DATABASE [Libri] SET DELAYED_DURABILITY = DISABLED 
-GO
-
-ALTER DATABASE [Libri] SET ACCELERATED_DATABASE_RECOVERY = OFF  
-GO
-
-ALTER DATABASE [Libri] SET QUERY_STORE = ON
-GO
-
-ALTER DATABASE [Libri] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
-GO
-
-ALTER DATABASE [Libri] SET  READ_WRITE 
-GO
-
-USE [Libri]
-GO
-
-/****** Object:  Table [dbo].[Libro]    Script Date: 23/01/2024 23:12:26 ******/
+/****** Object:  Table [dbo].[Categoria]    Script Date: 16/02/2024 17:53:13 ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-CREATE TABLE [dbo].[Libro](
-	[id] [nchar](15) NOT NULL,
-	[autore] [nchar](50) NOT NULL,
-	[titolo] [nchar](80) NOT NULL,
-	[editore] [nchar](50) NULL,
-	[dataPubblicazione] [date] NULL,
-	[descrizione] [varchar](max) NOT NULL,
- CONSTRAINT [PK_Libro] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-
-USE [Libri]
-GO
-
-/****** Object:  Table [dbo].[Libro]    Script Date: 23/01/2024 23:44:49 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[Libro](
-	[id] [nchar](15) NOT NULL,
-	[autore] [varchar](max) NOT NULL,
-	[titolo] [nchar](80) NOT NULL,
-	[editore] [nchar](50) NULL,
-	[dataPubblicazione] [date] NULL,
-	[descrizione] [varchar](max) NOT NULL,
- CONSTRAINT [PK_Libro] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-
-USE [Libri]
-GO
-
-/****** Object:  Table [dbo].[Categoria]    Script Date: 23/01/2024 23:50:15 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[Categoria](
-	[id] [int] NOT NULL,
-	[nome] [varchar](50) NOT NULL,
+	[nome] [nchar](100) NOT NULL,
  CONSTRAINT [PK_Categoria] PRIMARY KEY CLUSTERED 
 (
-	[id] ASC
+	[nome] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
-
-USE [Libri]
-GO
-
-/****** Object:  Table [dbo].[Utente]    Script Date: 23/01/2024 23:51:46 ******/
+/****** Object:  Table [dbo].[CategoriaLibro]    Script Date: 16/02/2024 17:53:13 ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-CREATE TABLE [dbo].[Utente](
-	[id] [int] NOT NULL,
-	[nome] [varchar](50) NOT NULL,
-	[password] [nvarchar](100) NOT NULL,
-	[email] [varchar](50) NOT NULL,
-	[secretRiga] [nchar](100) NOT NULL,
- CONSTRAINT [PK_Utente] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[CategoriaLibro](
+	[idLibro] [nchar](15) NOT NULL,
+	[categoria] [nchar](100) NOT NULL,
+ CONSTRAINT [PK_CategoriaLibro] PRIMARY KEY CLUSTERED 
+(
+	[idLibro] ASC,
+	[categoria] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Libro]    Script Date: 16/02/2024 17:53:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Libro](
+	[id] [nchar](15) NOT NULL,
+	[titolo] [nchar](100) NULL,
+	[editore] [nchar](50) NULL,
+	[anno] [nchar](6) NULL,
+	[descrizione] [nvarchar](max) NULL,
+	[img] [nvarchar](400) NULL,
+	[autori] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Libro] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-
-USE [Libri]
-GO
-
-/****** Object:  Table [dbo].[RelazioneUtenteLibro]    Script Date: 23/01/2024 23:51:29 ******/
+/****** Object:  Table [dbo].[Recensione]    Script Date: 16/02/2024 17:53:13 ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-CREATE TABLE [dbo].[RelazioneUtenteLibro](
+CREATE TABLE [dbo].[Recensione](
 	[idLibro] [nchar](15) NOT NULL,
 	[idUtente] [int] NOT NULL,
-	[recensione] [varchar](max) NOT NULL,
- CONSTRAINT [PK_RelazioneUtenteLibro] PRIMARY KEY CLUSTERED 
+	[recensione] [nvarchar](max) NULL,
+	[voto] [int] NULL,
+	[stato] [int] NOT NULL,
+ CONSTRAINT [PK_Recensione] PRIMARY KEY CLUSTERED 
 (
 	[idLibro] ASC,
 	[idUtente] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-
-ALTER TABLE [dbo].[RelazioneUtenteLibro]  WITH CHECK ADD  CONSTRAINT [Libro in RelazioneUtenteLibro] FOREIGN KEY([idLibro])
+/****** Object:  Table [dbo].[Utente]    Script Date: 16/02/2024 17:53:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Utente](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[login] [varchar](50) NOT NULL,
+	[password] [varchar](256) NULL,
+	[salt] [varchar](256) NULL,
+	[email] [varchar](100) NULL,
+ CONSTRAINT [PK_Utente] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CategoriaLibro]  WITH CHECK ADD  CONSTRAINT [FK_CategoriaLibro_Categoria] FOREIGN KEY([categoria])
+REFERENCES [dbo].[Categoria] ([nome])
+GO
+ALTER TABLE [dbo].[CategoriaLibro] CHECK CONSTRAINT [FK_CategoriaLibro_Categoria]
+GO
+ALTER TABLE [dbo].[CategoriaLibro]  WITH CHECK ADD  CONSTRAINT [FK_CategoriaLibro_Libro] FOREIGN KEY([idLibro])
 REFERENCES [dbo].[Libro] ([id])
 GO
-
-ALTER TABLE [dbo].[RelazioneUtenteLibro] CHECK CONSTRAINT [Libro in RelazioneUtenteLibro]
+ALTER TABLE [dbo].[CategoriaLibro] CHECK CONSTRAINT [FK_CategoriaLibro_Libro]
 GO
-
-ALTER TABLE [dbo].[RelazioneUtenteLibro]  WITH CHECK ADD  CONSTRAINT [Utente in RelazioneUtenteLibro] FOREIGN KEY([idUtente])
+ALTER TABLE [dbo].[Recensione]  WITH CHECK ADD  CONSTRAINT [FK_Recensione_Libro] FOREIGN KEY([idLibro])
+REFERENCES [dbo].[Libro] ([id])
+GO
+ALTER TABLE [dbo].[Recensione] CHECK CONSTRAINT [FK_Recensione_Libro]
+GO
+ALTER TABLE [dbo].[Recensione]  WITH CHECK ADD  CONSTRAINT [FK_Recensione_Utente] FOREIGN KEY([idUtente])
 REFERENCES [dbo].[Utente] ([id])
 GO
-
-ALTER TABLE [dbo].[RelazioneUtenteLibro] CHECK CONSTRAINT [Utente in RelazioneUtenteLibro]
+ALTER TABLE [dbo].[Recensione] CHECK CONSTRAINT [FK_Recensione_Utente]
 GO

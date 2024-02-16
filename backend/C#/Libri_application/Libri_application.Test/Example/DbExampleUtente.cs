@@ -16,11 +16,10 @@ namespace Libri_application.Test.Example
         {
             var ctx = new MyDbContext();
             Utente utente = new Utente();
-            utente.id = 1;
-            utente.nome = "nome";
+            utente.login = "nome";
             utente.email = "email";
             utente.password = "password";
-            utente.secretRiga = "secret";
+            utente.salt = "secret";
             ctx.Set<Utente>().Add(utente);
             ctx.SaveChanges();
         }

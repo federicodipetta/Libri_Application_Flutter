@@ -1,4 +1,6 @@
-﻿using Libri_application.LibriService.models.LibroDettagliato;
+﻿using Libri_application.LibriService.abstraction;
+using Libri_application.LibriService.models;
+using Libri_application.LibriService.models.LibroDettagliato;
 using Libri_application.Models.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -12,10 +14,12 @@ using static System.Net.WebRequestMethods;
 
 namespace Libri_application.LibriService
 {
-    public class LibriService
+    public class LibriService : ILibriService
     {
         string urlISBN = "https://www.googleapis.com/books/v1/volumes?q=isbn:";
         string urlId = "https://www.googleapis.com/books/v1/volumes/";
+        string urlTitolo = "https://www.googleapis.com/books/v1/volumes?q=";
+        string maxResult = "&maxResults=";
         public LibriService()
         {
         }
@@ -33,18 +37,53 @@ namespace Libri_application.LibriService
             var libro2 = JsonSerializer.Deserialize<LibroDettagliato>(data2);
             var l = new Libro();
             l.id = libro2.id;
-            l.autore = libro2.volumeInfo.authors[0];
+            l.autori = libro2.volumeInfo.authors[0];
             l.titolo = libro2.volumeInfo.title;
             l.editore = libro2.volumeInfo.publisher;
-            l.dataPubblicazione = DateTime.Now;//TODO rimuovere
+            l.anno = libro2.volumeInfo.publishedDate.Substring(0,3);
             l.descrizione = libro2.volumeInfo.description;
-
-            return l;
-                    
-                
-               
-            
+            return l;                                                             
         }
+
+        public async Task<Libro> GetLibroById(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage httpResponseMessage = await client.GetAsync(urlId + id);
+            HttpContent httpContent = httpResponseMessage.Content;
+            string data = await httpContent.ReadAsStringAsync();
+            var libro = JsonSerializer.Deserialize<LibroDettagliato>(data);
+            var l = new Libro();
+            l.id = libro.id;
+            l.autori = libro.volumeInfo.authors[0];
+            l.titolo = libro.volumeInfo.title;
+            l.editore = libro.volumeInfo.publisher;
+            l.anno = libro.volumeInfo.publishedDate.Substring(0, 3);
+            l.descrizione = libro.volumeInfo.description;
+            l.img = libro.volumeInfo.imageLinks.smallThumbnail;
+            return l;
+        }
+
+        public async Task<List<LibroRidotto>> GetLibri(string titolo)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(urlTitolo+titolo+maxResult+"10");
+            HttpContent content = response.Content;
+            string data = await content.ReadAsStringAsync();
+            var libri = JsonSerializer.Deserialize<models.LibroService>(data);
+            List<LibroRidotto> libriRidotti = new List<LibroRidotto>();
+            foreach (var libro in libri.items)
+            {
+                var l = new LibroRidotto();
+                l.id = libro.id;
+                l.autore = libro.volumeInfo.authors[0];
+                l.titolo = libro.volumeInfo.title;
+                l.urlImmagine = libro.volumeInfo.imageLinks.smallThumbnail;
+                libriRidotti.Add(l);
+            }
+            return libriRidotti;
+        }
+
+
 
     }
 }
