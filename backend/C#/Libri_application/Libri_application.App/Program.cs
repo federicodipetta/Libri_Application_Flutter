@@ -1,3 +1,6 @@
+using Libri_application.Models.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace Libri_application.App
 {
     public class Program
@@ -7,7 +10,10 @@ namespace Libri_application.App
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddDbContext<MyDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext"));
+            });
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
