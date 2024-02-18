@@ -11,8 +11,13 @@ namespace Libri_application.App.Controllers
     {
         private readonly ILibroService _libroService;
 
+        public LibroController(ILibroService libroService)
+        {
+            _libroService = libroService;
+        }
+
         [HttpGet]
-        [Route("GetLibro/{id:string}")]
+        [Route("GetLibro/{id}")]
         public Libro GetLibro(string id)
         {
             return _libroService.GetLibro(id);
@@ -25,14 +30,14 @@ namespace Libri_application.App.Controllers
             return Ok();
         }
         [HttpDelete]
-        [Route("DeleteLibro/{id:string}")]
+        [Route("DeleteLibro/{id}")]
         public IActionResult DeleteLibro(string id)
         {
             _libroService.EliminaLibro(id);
             return Ok();
         }
         [HttpPut]
-        [Route("ModificaLibro/{id:string}")]
+        [Route("ModificaLibro/{id}")]
         public IActionResult ModificaLibro(Libro libro, string id)
         {
             _libroService.EliminaLibro(id);

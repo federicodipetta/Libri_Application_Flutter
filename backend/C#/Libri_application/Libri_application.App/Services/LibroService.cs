@@ -28,6 +28,7 @@ namespace Libri_application.App.Services
                 var libriService = new LibriService.LibriService();
                 Libro libro = await libriService.GetLibro(isbn);
                 _repo.Add(libro);
+                _repo.Save();
                 return true;
             }
         }
@@ -42,6 +43,7 @@ namespace Libri_application.App.Services
             if(_repo.Get(id)==null)
             {
                 _repo.Delete(_repo.Get(id));
+                _repo.Save();
                 return true;
             }
             else
@@ -96,7 +98,7 @@ namespace Libri_application.App.Services
             if (_repo.Get(id) == null)
             {
                 var service = new LibriService.LibriService();
-                var libro = service.GetLibroById(id).Result;
+                var libro = service.GetLibro(id).Result;
                 return libro;
             }
             else

@@ -15,6 +15,11 @@ namespace Libri_application.Models.Context
         public DbSet<Utente> Utente { get; set; }
 
        public DbSet<Recensione> Recensione { get; set; }
+
+        public MyDbContext()
+        {
+
+        }
         public MyDbContext(DbContextOptions<MyDbContext> config) : base(config)
         {
 

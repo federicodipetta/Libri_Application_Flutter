@@ -34,7 +34,7 @@ namespace Libri_application.App
             builder.Services.AddScoped<IRecensioneService, RecensioneService>();
            // builder.Services.AddScoped<IUtenteService, UtenteService>();
            //repository
-           builder.Services.AddScoped<LibroRepository>();
+            builder.Services.AddScoped<LibroRepository>();
             builder.Services.AddScoped<RecensioneRepository>();
             builder.Services.AddScoped<UtenteRepository>();
 

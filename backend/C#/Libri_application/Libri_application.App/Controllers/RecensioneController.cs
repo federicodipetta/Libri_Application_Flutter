@@ -43,9 +43,9 @@ namespace Libri_application.App.Controllers
 
         [HttpGet]
         [Route("GetRecensioni/{idU:int}")]
-        public List<RecensioneRidottaDto> GetRecensioni(int idUtente)
+        public List<RecensioneRidottaDto> GetRecensioni(int idU)
         {
-            var recensioni =  _recensioneService.GetRecensioni(idUtente);
+            var recensioni =  _recensioneService.GetRecensioni(idU);
 
             return recensioni.Select(x => new RecensioneRidottaDto(x)).ToList();
         }
@@ -57,10 +57,6 @@ namespace Libri_application.App.Controllers
             _recensioneService.ModificaRecensione(recensione.ToRecensione());
             return Ok();
         }
-
-
-        
-
 
     }
 }

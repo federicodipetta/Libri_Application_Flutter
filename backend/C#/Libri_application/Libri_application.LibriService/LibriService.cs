@@ -40,8 +40,10 @@ namespace Libri_application.LibriService
             l.autori = libro2.volumeInfo.authors[0];
             l.titolo = libro2.volumeInfo.title;
             l.editore = libro2.volumeInfo.publisher;
-            l.anno = libro2.volumeInfo.publishedDate.Substring(0,3);
+            l.anno = libro2.volumeInfo.publishedDate.Substring(0,4);
             l.descrizione = libro2.volumeInfo.description;
+            l.img = libro2.volumeInfo.imageLinks.smallThumbnail;
+            l.isbn = isbn;
             return l;                                                             
         }
 
@@ -57,7 +59,7 @@ namespace Libri_application.LibriService
             l.autori = libro.volumeInfo.authors[0];
             l.titolo = libro.volumeInfo.title;
             l.editore = libro.volumeInfo.publisher;
-            l.anno = libro.volumeInfo.publishedDate.Substring(0, 3);
+            l.anno = libro.volumeInfo.publishedDate.Substring(0, 4);
             l.descrizione = libro.volumeInfo.description;
             l.img = libro.volumeInfo.imageLinks.smallThumbnail;
             return l;
