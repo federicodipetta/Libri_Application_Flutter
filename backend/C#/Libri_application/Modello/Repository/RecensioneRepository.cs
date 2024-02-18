@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Libri_application.Models.Repository
 {
-    public class RecensioneRepository : GenericRepository<RecensioneRepository>
+    public class RecensioneRepository : GenericRepository<Recensione>
     {
         public RecensioneRepository(MyDbContext ctx) : base(ctx)
         {
