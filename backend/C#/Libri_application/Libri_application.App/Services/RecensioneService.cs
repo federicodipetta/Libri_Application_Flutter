@@ -10,14 +10,12 @@ namespace Libri_application.App.Services
         private readonly RecensioneRepository _repoR;
         private readonly LibroRepository _repoL;
         private readonly UtenteRepository _repoU;
-        private readonly ILibroService _libroService;
         public RecensioneService(RecensioneRepository repoR, LibroRepository repoL, UtenteRepository repoU
-, ILibroService libroService            )
+           )
         {
             _repoL = repoL;
             _repoR = repoR;
             _repoU = repoU;
-            _libroService = libroService;
         }
 
         public async Task<bool>  AggiungiRecensione(string isbn, Recensione recensione)
@@ -30,6 +28,7 @@ namespace Libri_application.App.Services
             }
             var libro = _repoL.GetLibroByIsbn(isbn);
             recensione.idLibro = libro.id;
+            recensione.libro = libro;
             _repoR.Add(recensione);
             return true;
         }
@@ -52,6 +51,8 @@ namespace Libri_application.App.Services
 
         public bool ModificaRecensione(Recensione recensione)
         {
+            recensione.libro = _repoL.Get(recensione.idLibro);
+            recensione.utente = _repoU.Get(recensione.idUtente);
             _repoR.Update(recensione);
             return true;
         }
