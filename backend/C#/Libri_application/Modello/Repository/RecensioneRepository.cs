@@ -21,6 +21,11 @@ namespace Libri_application.Models.Repository
             return _ctx.Set<Recensione>().Where(x => x.idUtente == idUtente).ToList();
         }
 
+        public Recensione GetRecensioneByUtenteByLibro(int idUtente, string idLibro)
+        {
+            return _ctx.Set<Recensione>().Where(x => x.idUtente == idUtente && x.idLibro == idLibro).FirstOrDefault();
+        }
+
     }
 
 }

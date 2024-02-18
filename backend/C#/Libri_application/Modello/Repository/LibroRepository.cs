@@ -31,6 +31,12 @@ namespace Libri_application.Models.Repository
         {
             return _ctx.Set<Libro>().Where(x => x.titolo == titolo).ToList();
         }
+
+
+        public Libro GetLibroByIsbn(string isbn)
+        {
+            return _ctx.Libro.First(l => l.isbn == isbn);
+        }
     }
     
 }

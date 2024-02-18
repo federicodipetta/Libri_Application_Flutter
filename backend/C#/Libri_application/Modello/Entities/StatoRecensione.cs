@@ -12,6 +12,5 @@ namespace Libri_application.Models.Entities
         COMPRATO=1,
         LETTO=2,
         RECENSITO=3
-
     }
 }
