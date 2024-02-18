@@ -4,13 +4,11 @@ namespace Libri_application.App.Abstractions.Services
 {
     public interface ILibroService
     {
-        bool AggiungiLibro(Libro libro);
+        bool AggiungiLibro(string isbn);
 
         bool EliminaLibro(Libro libro);
 
-        Libro GetLibro(int id);
-
-        List<Libro> GetLibri();
+        Libro GetLibro(string id);
 
         List<Libro> GetLibriByGenere(string genere);
 

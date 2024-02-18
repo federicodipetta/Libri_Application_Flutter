@@ -13,6 +13,12 @@ namespace Libri_application.Models.Repository
         public LibroRepository(MyDbContext ctx) : base(ctx)
         {
         }
+
+
+        public Libro GetLibroByIsbn(string isbn)
+        {
+            return _ctx.Libro.First(l => l.isbn == isbn);
+        }
     }
     
 }

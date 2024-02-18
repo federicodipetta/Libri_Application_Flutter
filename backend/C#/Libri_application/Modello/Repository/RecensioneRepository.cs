@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Libri_application.Models.Repository
 {
-    public class RecensioneRepository : GenericRepository<RecensioneRepository>
+    public class RecensioneRepository : GenericRepository<Recensione>
     {
         public RecensioneRepository(MyDbContext ctx) : base(ctx)
         {
@@ -19,6 +19,11 @@ namespace Libri_application.Models.Repository
         public List<Recensione> GetRecensioneByUtente(int idUtente)
         {
             return _ctx.Set<Recensione>().Where(x => x.idUtente == idUtente).ToList();
+        }
+
+        public Recensione GetRecensioneByUtenteByLibro(int idUtente, string idLibro)
+        {
+            return _ctx.Set<Recensione>().Where(x => x.idUtente == idUtente && x.idLibro == idLibro).FirstOrDefault();
         }
 
     }

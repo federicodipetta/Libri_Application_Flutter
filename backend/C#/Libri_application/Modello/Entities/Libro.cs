@@ -16,6 +16,7 @@ namespace Libri_application.Models.Entities
         public string anno { get; set; }
         public string descrizione { get; set; } 
 
+        public string isbn { get; set; }
         public string img { get; set; }
     }
 }
