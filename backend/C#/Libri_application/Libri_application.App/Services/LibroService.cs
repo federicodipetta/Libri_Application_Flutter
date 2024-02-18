@@ -14,7 +14,7 @@ namespace Libri_application.App.Services
         {
             _repo = repo;
         }
-        public bool AggiungiLibro(string isbn)
+        public async Task<bool> AggiungiLibro(string isbn)
         {
 
             if (_repo.Contains(isbn))
@@ -25,8 +25,8 @@ namespace Libri_application.App.Services
             else
             {
                 // Il libro non è presente nel database
-                var service = new LibriService.LibriService();
-                Libro libro = service.GetLibro(isbn).Result;
+                var libriService = new LibriService.LibriService();
+                Libro libro = await libriService.GetLibro(isbn);
                 _repo.Add(libro);
                 return true;
             }

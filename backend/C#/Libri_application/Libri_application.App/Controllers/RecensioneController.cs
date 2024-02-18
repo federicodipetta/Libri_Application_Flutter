@@ -19,7 +19,7 @@ namespace Libri_application.App.Controllers
         }
 
         [HttpGet]
-        [Route("GetRensione/{idU:int}/{idL}")]
+        [Route("GetRecensione/{idU:int}/{idL}")]
         public Recensione GetRecensione(int idU, string idL)
         {
             return _recensioneService.GetRecensioneByLibro(idU, idL);

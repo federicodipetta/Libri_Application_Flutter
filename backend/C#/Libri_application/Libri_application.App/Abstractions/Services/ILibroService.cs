@@ -5,7 +5,7 @@ namespace Libri_application.App.Abstractions.Services
 {
     public interface ILibroService
     {
-        bool AggiungiLibro(string isbn);
+        Task<bool> AggiungiLibro(string isbn);
         bool EliminaLibro(Libro libro);
         bool EliminaLibro(string id);
         Libro GetLibro(string id);
