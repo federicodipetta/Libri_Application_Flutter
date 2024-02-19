@@ -1,5 +1,5 @@
-import 'package:code/LibriForm.dart';
-import 'package:code/LibriHome.dart';
+import 'package:code/Widgets/LibriForm.dart';
+import 'package:code/Widgets/LibriHome.dart';
 import 'package:flutter/material.dart';
 
 void main() {
