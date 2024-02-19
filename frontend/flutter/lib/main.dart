@@ -1,5 +1,6 @@
 import 'package:code/Widgets/LibriForm.dart';
 import 'package:code/Widgets/LibriHome.dart';
+import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final String title = "Comuni";
+  final String title = "Libri App";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +16,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ComuniPage(title: title),
+      home: ComuniPage(
+        title: title,
+      ),
     );
   }
 }
@@ -41,7 +44,7 @@ class ComuniPage extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              LibriHome(),
+              RecensioneHome(),
               LibriForm(),
             ],
           ),

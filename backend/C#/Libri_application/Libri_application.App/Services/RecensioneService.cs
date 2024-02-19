@@ -30,6 +30,7 @@ namespace Libri_application.App.Services
             recensione.idLibro = libro.id;
             recensione.libro = libro;
             _repoR.Add(recensione);
+            _repoL.Save();
             return true;
         }
 
@@ -46,7 +47,7 @@ namespace Libri_application.App.Services
 
         public List<Recensione> GetRecensioni(int idUtente)
         {
-            return _repoR.GetRecensioneByUtente(idUtente).ToList();
+            return _repoR.GetRecensioneByUtente(idUtente);
         }
 
         public bool ModificaRecensione(Recensione recensione)

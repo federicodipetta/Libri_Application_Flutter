@@ -1,6 +1,8 @@
 ﻿using Libri_application.App.Abstractions.Services;
+using Libri_application.App.Factorys;
 using Libri_application.App.Models.Dtos;
 using Libri_application.App.Models.Requests;
+using Libri_application.App.Models.Responses;
 using Libri_application.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +22,14 @@ namespace Libri_application.App.Controllers
 
         [HttpGet]
         [Route("GetRecensione/{idU:int}/{idL}")]
-        public Recensione GetRecensione(int idU, string idL)
+        public IActionResult GetRecensione(int idU, string idL)
         {
-            return _recensioneService.GetRecensioneByLibro(idU, idL);
+            var recensione = _recensioneService.GetRecensioneByLibro(idU, idL);
+            var response = new RecensioneCompletaResonse();
+            response.recensione = new RecensioneDto(recensione);
+            response.libro = new LibroDto(recensione.libro);
+            response.utente = new UtenteOutDto(recensione.utente);
+            return Ok(ResponseFactory.WithSuccess(response));
         }
 
         [HttpPost]

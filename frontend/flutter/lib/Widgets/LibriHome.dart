@@ -15,7 +15,7 @@ class LibriHome extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(snapshot.data![index].titolo),
-                    subtitle: Text(snapshot.data![index].autore),
+                    subtitle: Text(snapshot.data![index].autori.join(", ")),
                   );
                 });
           } else if (snapshot.hasError) {

@@ -37,7 +37,7 @@ namespace Libri_application.LibriService
             var libro2 = JsonSerializer.Deserialize<LibroDettagliato>(data2);
             var l = new Libro();
             l.id = libro2.id;
-            l.autori = libro2.volumeInfo.authors[0];
+            l.autori = libro2.volumeInfo.authors.Aggregate((x,y) => x+','+y  );
             l.titolo = libro2.volumeInfo.title;
             l.editore = libro2.volumeInfo.publisher;
             l.anno = libro2.volumeInfo.publishedDate.Substring(0,4);
@@ -56,7 +56,7 @@ namespace Libri_application.LibriService
             var libro = JsonSerializer.Deserialize<LibroDettagliato>(data);
             var l = new Libro();
             l.id = libro.id;
-            l.autori = libro.volumeInfo.authors[0];
+            l.autori = libro.volumeInfo.authors.Aggregate((x, y) => x + ',' + y); ;
             l.titolo = libro.volumeInfo.title;
             l.editore = libro.volumeInfo.publisher;
             l.anno = libro.volumeInfo.publishedDate.Substring(0, 4);
@@ -77,7 +77,7 @@ namespace Libri_application.LibriService
             {
                 var l = new LibroRidotto();
                 l.id = libro.id;
-                l.autore = libro.volumeInfo.authors[0];
+                l.autore = libro.volumeInfo.authors.Aggregate((x, y) => x + ',' + y); ;
                 l.titolo = libro.volumeInfo.title;
                 l.urlImmagine = libro.volumeInfo.imageLinks.smallThumbnail;
                 libriRidotti.Add(l);

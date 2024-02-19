@@ -1,5 +1,6 @@
 ﻿using Libri_application.Models.Context;
 using Libri_application.Models.Entities;
+using Libri_application.Models.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,13 @@ namespace Libri_application.Test.Example
             recensione.utente = utente;
             recensione.recensione = "recensione";
             recensione.voto = 5;
+            recensione.periodo = "periodo";
             recensione.stato = StatoRecensione.DA_COMPRARE;
-            ctx.Set<Recensione>().Add(recensione);
+           // ctx.Set<Recensione>().Add(recensione);
             ctx.SaveChanges();
+            RecensioneRepository recensioneRepository = new RecensioneRepository(ctx);
+            var recensioni = recensioneRepository.GetRecensioneByUtente(utente.id).ToList();
+            recensioni.ForEach(r => Console.WriteLine(r.libro.anno));
         }
     }
 }

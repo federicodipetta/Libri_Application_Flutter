@@ -9,6 +9,10 @@ namespace Libri_application.App.Models.Requests
         public string Testo { get; set; }
         public int Voto { get; set; }
 
+        public StatoRecensione Stato { get; set; }
+
+        public string periodo { get; set; }
+
         public RecensioneRequest() { }  
 
         public Recensione ToRecensione()
@@ -18,6 +22,8 @@ namespace Libri_application.App.Models.Requests
             recensione.idLibro = String.Empty;
             recensione.recensione= Testo;
             recensione.voto = Voto;
+            recensione.stato = Stato;
+            recensione.periodo = periodo;
             return recensione;
         }
     }

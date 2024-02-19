@@ -16,6 +16,8 @@ namespace Libri_application.Models.Entities
 
         public int voto { get; set; }
 
+        public string periodo { get; set; }
+
         public StatoRecensione stato { get; set; }
 
         
