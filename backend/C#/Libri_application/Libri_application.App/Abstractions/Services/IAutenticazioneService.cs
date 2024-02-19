@@ -6,6 +6,6 @@
 
         public bool Logout(string username);
 
-        public string Register(string username, string password);
+        public string Register(string username, string password,string mail);
     }
 }
