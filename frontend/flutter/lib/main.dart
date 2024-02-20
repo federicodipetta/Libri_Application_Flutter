@@ -1,6 +1,9 @@
+import 'package:code/Models/LibroMinimo.dart';
+import 'package:code/Service/LibriService.dart';
 import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LibriForm.dart';
 import 'package:code/Widgets/QRScanner.dart';
+import 'package:code/Widgets/RecensioneForm.dart';
 import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +18,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: title,
       theme: ThemeData.dark(),
-      home: ComuniPage(
+      home: LibriMain(
         title: title,
       ),
     );
   }
 }
 
-class ComuniPage extends StatelessWidget {
+class LibriMain extends StatelessWidget {
   final String title;
-  ComuniPage({Key? key, required this.title}) : super(key: key);
+  LibriMain({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +35,23 @@ class ComuniPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.menu_book_sharp)),
-              Tab(icon: Icon(Icons.library_add)),
-            ],
-          ),
-          title: const Text('Libri App'),
+          title: const Text("Libri App"),
         ),
-        body: const TabBarView(
-          children: [
-            QRScanner(),
-            LibreriaHome(),
-            //RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
-          ],
+        body: const LibreriaHome(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            String isbn = await Navigator.push(
+                context, MaterialPageRoute(builder: (context) => QRScanner()));
+            if (!isbn.isEmpty) {
+              LibroMinimo libro = await LibriService.getLibroRidotto(isbn);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          RecensioneForm(libro: libro, voto: 2, isbn: isbn)));
+            }
+          },
+          child: const Icon(Icons.add),
         ),
       ),
     );

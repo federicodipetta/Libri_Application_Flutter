@@ -43,4 +43,18 @@ class RecensioneService {
       throw Exception('Failed to load recensioni');
     }
   }
+
+  static void addRecensione(String isbn, String recensione, int voto, int stato,
+      String periodo) async {
+    await http.post(Uri.http(url, "$controller/AddRecensione"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "idUtente": 1,
+          "isbn": isbn,
+          "testo": recensione,
+          "voto": voto,
+          "stato": stato,
+          "periodo": periodo
+        }));
+  }
 }

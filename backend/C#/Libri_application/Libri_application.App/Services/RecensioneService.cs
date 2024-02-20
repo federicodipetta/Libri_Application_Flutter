@@ -24,7 +24,12 @@ namespace Libri_application.App.Services
             {
                 var libriService = new LibriService.LibriService();
                 Libro Libro = await libriService.GetLibro(isbn);
-                _repoL.Add(Libro);
+                if (Libro != null)
+                {
+                    _repoL.Add(Libro);
+                    _repoL.Save();
+                }
+                else return false;
             }
             var libro = _repoL.GetLibroByIsbn(isbn);
             recensione.idLibro = libro.id;

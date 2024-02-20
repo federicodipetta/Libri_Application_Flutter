@@ -106,5 +106,19 @@ namespace Libri_application.App.Services
                 return _repo.Get(id);
             }
         }
+
+        public Libro GetLibroByIsbn(string isbn)
+        {
+            if (_repo.GetLibroByIsbn(isbn) == null)
+            {
+                var service = new LibriService.LibriService();
+                var libro = service.GetLibro(isbn).Result;
+                return libro;
+            }
+            else
+            {
+                return _repo.GetLibroByIsbn(isbn);
+            }
+        }
     }
 }

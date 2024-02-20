@@ -119,7 +119,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Libro](
 	[id] [nchar](15) NOT NULL,
-	[titolo] [nchar](100) NULL,
+	[titolo] [varchar](700) NULL,
 	[editore] [nchar](50) NULL,
 	[anno] [nchar](6) NULL,
 	[descrizione] [nvarchar](max) NULL,

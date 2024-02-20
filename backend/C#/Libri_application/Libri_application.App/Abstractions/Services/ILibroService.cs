@@ -9,6 +9,7 @@ namespace Libri_application.App.Abstractions.Services
         bool EliminaLibro(Libro libro);
         bool EliminaLibro(string id);
         Libro GetLibro(string id);
+        Libro GetLibroByIsbn(string isbn);
         List<Libro> GetLibri();
         List<Libro> GetLibriByGenere(string genere);
         List<LibroRidotto> GetLibriByTitolo(string titolo);

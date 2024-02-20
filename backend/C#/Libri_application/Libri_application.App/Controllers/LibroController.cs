@@ -1,4 +1,5 @@
 ﻿using Libri_application.App.Abstractions.Services;
+using Libri_application.App.Models.Dtos;
 using Libri_application.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,13 @@ namespace Libri_application.App.Controllers
         public LibroController(ILibroService libroService)
         {
             _libroService = libroService;
+        }
+
+        [HttpGet]
+        [Route("GetLibroIsbn/{isbn}")]
+        public LibroRidottoDto GetLibri(string isbn)
+        {
+            return new LibroRidottoDto(_libroService.GetLibroByIsbn(isbn));
         }
 
         [HttpGet]

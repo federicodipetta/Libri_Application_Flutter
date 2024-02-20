@@ -1,50 +1,21 @@
+import "package:code/Models/LibroMinimo.dart";
 import "package:http/http.dart" as http;
 import "dart:convert";
 import 'package:code/Models/Libro.dart';
 
 class LibriService {
-  static String url = "10.0.2.2:3000";
+  static String url = "10.0.2.2:5073";
+  static String controller = "api/v1/Libro";
 
-  static Future<Libro> getLibro(String isbn) async {
-    var response = await http.get(Uri.http(url, "/api/v0/libro" + isbn));
-    if (response.statusCode == 200) {
-      Libro libro = Libro.defaultLibro();
-      try {
-        var decodedResponse = jsonDecode(response.body);
-        libro = Libro.fromJson(decodedResponse);
-      } catch (e) {
-        print(e);
+  static Future<LibroMinimo> getLibroRidotto(String isbn) {
+    return http
+        .get(Uri.http(url, "$controller/GetLibroIsbn/$isbn"))
+        .then((response) {
+      if (response.statusCode == 200) {
+        return LibroMinimo.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to load libro');
       }
-      return libro;
-    } else {
-      throw Exception('Failed to load libri');
-    }
-  }
-
-  static void addLibro(String isbn) async {
-    await http.post(Uri.http(url, "/api/v0/libro"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"isbn": isbn}));
-  }
-
-  static Future<List<Libro>> getLibri() async {
-    var response = await http.get(Uri.http(url, "/api/v0/libri"));
-    if (response.statusCode == 200) {
-      List<Libro> libri = [];
-      try {
-        jsonDecode(Utf8Decoder().convert(response.bodyBytes))
-            .forEach((element) {
-          libri.add(Libro.fromJson(element));
-        });
-        libri.forEach((element) {
-          print(element.toJson());
-        });
-      } catch (e) {
-        print(e);
-      }
-      return libri;
-    } else {
-      throw Exception('Failed to load libri');
-    }
+    });
   }
 }

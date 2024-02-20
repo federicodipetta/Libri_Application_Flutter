@@ -32,11 +32,7 @@ class _QRScannerState extends State<QRScanner> {
                     if (!isScanCompleted) {
                       String code = barcode.rawValue ?? '---';
                       isScanCompleted = true;
-                      LibriService.addLibro(code);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LibreriaHome()));
+                      Navigator.pop(context, code);
                     }
                   }),
             ),
