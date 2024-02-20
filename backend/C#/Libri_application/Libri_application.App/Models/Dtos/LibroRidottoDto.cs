@@ -7,7 +7,7 @@ namespace Libri_application.App.Models.Dtos
         public string id { get; set; }
         public string titolo { get; set; }
 
-        public string autori { get; set; }
+        public string[] autori { get; set; }
 
         public string urlImg { get; set; }
 
@@ -19,7 +19,7 @@ namespace Libri_application.App.Models.Dtos
         {
             id = libro.id;
             titolo = libro.titolo;
-            autori = libro.autori;
+            autori = libro.autori.Split(',');
             urlImg = libro.img;
         }
 

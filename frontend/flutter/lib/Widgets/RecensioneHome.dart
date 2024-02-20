@@ -21,7 +21,6 @@ class RecensioneHome extends StatelessWidget {
           future: RecensioneService.getRecensione(this.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              //TODO : fare la visualizzazione per le recensioni
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
