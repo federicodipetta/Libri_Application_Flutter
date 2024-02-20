@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Models/Recensione.dart';
+import 'package:code/Models/RecensioneMinima.dart';
 import 'package:http/http.dart' as http;
 
 class RecensioneService {
@@ -21,6 +23,24 @@ class RecensioneService {
       return recensione;
     } else {
       throw Exception('Failed to load recensione');
+    }
+  }
+
+  static Future<List<RecensioneMinima>> getRecensioni() async {
+    var response = await http.get(Uri.http(url, "$controller/GetRecensioni/1"));
+    if (response.statusCode == 200) {
+      List<RecensioneMinima> recensioni = [];
+      try {
+        jsonDecode(Utf8Decoder().convert(response.bodyBytes))
+            .forEach((element) {
+          recensioni.add(RecensioneMinima.fromJson(element));
+        });
+      } catch (e) {
+        print(e);
+      }
+      return recensioni;
+    } else {
+      throw Exception('Failed to load recensioni');
     }
   }
 }

@@ -37,7 +37,7 @@ class ComuniPage extends StatelessWidget {
               Tab(icon: Icon(Icons.library_add)),
             ],
           ),
-          title: const Text('Tabs Demo'),
+          title: const Text('Libri App'),
         ),
         body: const TabBarView(
           children: [
