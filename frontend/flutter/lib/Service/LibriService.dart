@@ -6,8 +6,7 @@ class LibriService {
   static String url = "10.0.2.2:3000";
 
   static Future<Libro> getLibro(String isbn) async {
-    var response =
-        await http.get(Uri.http(url, "/api/v1/Libro/GetLibro" + isbn));
+    var response = await http.get(Uri.http(url, "/api/v0/libro" + isbn));
     if (response.statusCode == 200) {
       Libro libro = Libro.defaultLibro();
       try {
