@@ -1,3 +1,4 @@
+import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LibriForm.dart';
 import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: ComuniPage(
         title: title,
       ),
@@ -28,25 +27,23 @@ class ComuniPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.menu_book_sharp)),
-                Tab(icon: Icon(Icons.library_add)),
-              ],
-            ),
-            title: const Text('Tabs Demo'),
-          ),
-          body: const TabBarView(
-            children: [
-              RecensioneHome(),
-              LibriForm(),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.menu_book_sharp)),
+              Tab(icon: Icon(Icons.library_add)),
             ],
           ),
+          title: const Text('Tabs Demo'),
+        ),
+        body: const TabBarView(
+          children: [
+            RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
+            LibreriaHome(),
+          ],
         ),
       ),
     );

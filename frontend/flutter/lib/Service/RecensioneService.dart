@@ -7,9 +7,9 @@ class RecensioneService {
   static String url = "10.0.2.2:5073";
   static String controller = "api/v1/Recensione";
 
-  static Future<Recensione> getRecensione(String isbn) async {
+  static Future<Recensione> getRecensione(String id) async {
     var response =
-        await http.get(Uri.http(url, "$controller/GetRecensione/1/" + isbn));
+        await http.get(Uri.http(url, "$controller/GetRecensione/1/" + id));
     if (response.statusCode == 200) {
       Recensione recensione = Recensione.defaultRecensione();
       try {

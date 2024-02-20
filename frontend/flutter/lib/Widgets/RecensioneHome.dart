@@ -6,79 +6,89 @@ import 'package:flutter/widgets.dart';
 import '../Models/Libro.dart';
 
 class RecensioneHome extends StatelessWidget {
-  const RecensioneHome({Key? key}) : super(key: key);
+  final String id;
+  final String title;
+  const RecensioneHome({Key? key, required this.id, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: RecensioneService.getRecensione("1"),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            //TODO : fare la visualizzazione per le recensioni
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  libro(context, snapshot.data!.libro, snapshot.data!.voto),
-                  const SizedBox(height: 10),
-                  Card(
-                    color: Theme.of(context).primaryColor,
-                    elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Descrizione',
-                            style: Theme.of(context).textTheme.headline6,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: FutureBuilder(
+          future: RecensioneService.getRecensione(this.id),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              //TODO : fare la visualizzazione per le recensioni
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      libro(context, snapshot.data!.libro, snapshot.data!.voto),
+                      const SizedBox(height: 10),
+                      Card(
+                        color: Theme.of(context).cardColor,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                'Descrizione',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                snapshot.data!.libro.descrizione,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                textAlign: TextAlign.justify,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            snapshot.data!.libro.descrizione,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Card(
-                    color: Theme.of(context).primaryColor,
-                    elevation: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Review',
-                            style: Theme.of(context).textTheme.headline6,
+                      const SizedBox(height: 10),
+                      Card(
+                        color: Theme.of(context).cardColor,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                'Review',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                snapshot.data!.recensione,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                textAlign: TextAlign.justify,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            snapshot.data!.recensione,
-                            style: Theme.of(context).textTheme.bodyText1,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return Center(child: const CircularProgressIndicator());
-        });
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return Center(child: const CircularProgressIndicator());
+          }),
+    );
   }
 
   Widget libro(BuildContext context, Libro libro, int voto) {
     return Card(
-      color: Theme.of(context).primaryColor,
+      color: Theme.of(context).cardColor,
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -90,7 +100,7 @@ class RecensioneHome extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                  color: Theme.of(context).colorScheme.secondary,
                   width: 2.3,
                 ),
               ),
@@ -121,12 +131,12 @@ class RecensioneHome extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     libro.editore,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
                   Text(
                     libro.anno,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 5),
                   votoWidget(voto),
