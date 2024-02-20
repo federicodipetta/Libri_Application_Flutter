@@ -1,5 +1,6 @@
 import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LibriForm.dart';
+import 'package:code/Widgets/QRScanner.dart';
 import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
 
@@ -41,8 +42,8 @@ class ComuniPage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
             LibreriaHome(),
+            RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
           ],
         ),
       ),
