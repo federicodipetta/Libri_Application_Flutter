@@ -42,8 +42,9 @@ class ComuniPage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
+            QRScanner(),
             LibreriaHome(),
-            RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
+            //RecensioneHome(id: "Dd9N0AEACAAJ", title: "1984"),
           ],
         ),
       ),
