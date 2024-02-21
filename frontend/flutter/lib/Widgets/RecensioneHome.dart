@@ -21,59 +21,63 @@ class RecensioneHome extends StatelessWidget {
           future: RecensioneService.getRecensione(this.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      libro(context, snapshot.data!.libro, snapshot.data!.voto),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context).cardColor,
-                        elevation: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                'Descrizione',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                snapshot.data!.libro.descrizione,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                                textAlign: TextAlign.justify,
-                              ),
-                            ],
+              return Hero(
+                tag: snapshot.data!.libro.id,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        libro(
+                            context, snapshot.data!.libro, snapshot.data!.voto),
+                        const SizedBox(height: 10),
+                        Card(
+                          color: Theme.of(context).cardColor,
+                          elevation: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  'Descrizione',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  snapshot.data!.libro.descrizione,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Card(
-                        color: Theme.of(context).cardColor,
-                        elevation: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                'Review',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                snapshot.data!.recensione,
-                                style: Theme.of(context).textTheme.bodyLarge,
-                                textAlign: TextAlign.justify,
-                              ),
-                            ],
+                        const SizedBox(height: 10),
+                        Card(
+                          color: Theme.of(context).cardColor,
+                          elevation: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  'Review',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  snapshot.data!.recensione,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

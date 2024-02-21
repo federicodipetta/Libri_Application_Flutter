@@ -24,9 +24,12 @@ class LibreriaHome extends StatelessWidget {
                           builder: (context) => RecensioneHome(
                               id: snapshot.data![index].libro.id,
                               title: snapshot.data![index].libro.titolo))),
-                  child: LibroMinimoWidget(
-                      libro: snapshot.data![index].libro,
-                      voto: snapshot.data![index].voto),
+                  child: Hero(
+                    tag: 'libro' + snapshot.data![index].libro.id,
+                    child: LibroMinimoWidget(
+                        libro: snapshot.data![index].libro,
+                        voto: snapshot.data![index].voto),
+                  ),
                 );
               },
             );
