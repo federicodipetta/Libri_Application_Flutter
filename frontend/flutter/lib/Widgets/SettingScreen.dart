@@ -1,11 +1,12 @@
 import 'package:code/Providers/AuthProvider.dart';
+import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Providers/ThemeProvider.dart';
 import 'package:code/Widgets/AccountScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
-  bool isDark = false;
+  const SettingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

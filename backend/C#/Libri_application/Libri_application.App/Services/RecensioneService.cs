@@ -42,6 +42,7 @@ namespace Libri_application.App.Services
         public bool EliminaRecensione(Recensione recensione)
         {
             _repoR.Delete(recensione);
+            _repoR.Save();
             return true;
         }
 
@@ -57,9 +58,15 @@ namespace Libri_application.App.Services
 
         public bool ModificaRecensione(Recensione recensione)
         {
-            recensione.libro = _repoL.Get(recensione.idLibro);
-            recensione.utente = _repoU.Get(recensione.idUtente);
-            _repoR.Update(recensione);
+            var x = _repoR.GetRecensioneByUtenteByLibro(recensione.idUtente, recensione.idLibro);
+            if (x == null) return false;
+            x.recensione = recensione.recensione;
+            x.voto = recensione.voto;
+            x.periodo = recensione.periodo;
+            x.stato = recensione.stato;
+            _repoR.Update(x);
+
+            _repoR.Save();
             return true;
         }
     }

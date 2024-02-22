@@ -59,7 +59,7 @@ namespace Libri_application.App.Controllers
 
         [HttpPut]
         [Route("ModificaRecensione")]
-        public IActionResult ModificaRecensione(RecensioneRequest recensione)
+        public IActionResult ModificaRecensione(ModificaRecensioneRequest recensione)
         {
             _recensioneService.ModificaRecensione(recensione.ToRecensione());
             return Ok();

@@ -4,6 +4,21 @@ enum Stato {
   letto,
   recensito;
 
+  static Stato statoFromInt(int stato) {
+    switch (stato) {
+      case 0:
+        return Stato.daComprare;
+      case 1:
+        return Stato.comprato;
+      case 2:
+        return Stato.letto;
+      case 3:
+        return Stato.recensito;
+      default:
+        return Stato.daComprare;
+    }
+  }
+
   static String statoToString(Stato stato) {
     switch (stato) {
       case Stato.daComprare:

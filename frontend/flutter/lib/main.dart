@@ -1,13 +1,12 @@
 import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Providers/AuthProvider.dart';
+import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Providers/ThemeProvider.dart';
 import 'package:code/Service/LibriService.dart';
-import 'package:code/Widgets/AccountScreen.dart';
 import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LoginScreen.dart';
 import 'package:code/Widgets/QRScanner.dart';
 import 'package:code/Widgets/RecensioneForm.dart';
-import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:code/Widgets/SettingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +14,8 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => ThemeProvider()),
-    ChangeNotifierProvider(create: (context) => AuthProvider())
+    ChangeNotifierProvider(create: (context) => AuthProvider()),
+    ChangeNotifierProvider(create: (context) => RecensioneProvider()),
   ], child: MyApp()));
 }
 
@@ -42,7 +42,7 @@ class LibriMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return !context.watch<AuthProvider>().isLogged
-        ? LoginScreen()
+        ? const LoginScreen()
         : DefaultTabController(
             length: 2,
             child: Scaffold(

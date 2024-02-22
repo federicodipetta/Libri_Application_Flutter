@@ -2,22 +2,34 @@ import 'dart:ffi';
 
 import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Models/Stato.dart';
+import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Service/RecensioneService.dart';
 import 'package:code/Widgets/LibroMinimoWidget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 class RecensioneForm extends StatefulWidget {
   final LibroMinimo libro;
   final int voto;
   final String isbn;
-  const RecensioneForm({
-    Key? key,
-    required this.libro,
-    required this.voto,
-    required this.isbn,
-  }) : super(key: key);
+  final String? recensione;
+  final String? periodo;
+  final Stato stato;
+  final int valutazione;
+  final bool aggiunta;
+  const RecensioneForm(
+      {Key? key,
+      required this.libro,
+      required this.voto,
+      required this.isbn,
+      this.recensione,
+      this.periodo,
+      this.stato = Stato.daComprare,
+      this.valutazione = 1,
+      this.aggiunta = true})
+      : super(key: key);
 
   @override
   _RecensioneFormState createState() => _RecensioneFormState();
@@ -27,13 +39,28 @@ class _RecensioneFormState extends State<RecensioneForm> {
   final _formKey = GlobalKey<FormState>();
   final _periodoController = TextEditingController();
   final _recensioneController = TextEditingController();
-  int optionValue = 0;
-  int votazione = 0;
+  Stato optionValue = Stato.daComprare;
+  int votazione = 1;
+  @override
+  void initState() {
+    super.initState();
+    if (!widget.aggiunta) {
+      _recensioneController.text = widget.recensione ?? "";
+      _periodoController.text = widget.periodo ?? "";
+      optionValue = widget.stato;
+      votazione = widget.valutazione;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    //inizializzo i valori se è una form per la modifica
+    String appbatText =
+        widget.aggiunta ? "Aggiungi Recensione" : "Modifica Recensione";
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aggiungi Recensione'),
+        title: Text(appbatText),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,22 +100,22 @@ class _RecensioneFormState extends State<RecensioneForm> {
                             return null;
                           },
                         ),
-                        DropdownButton<int>(
+                        DropdownButton<Stato>(
                           value: optionValue,
                           items: <Stato>[
                             Stato.daComprare,
                             Stato.comprato,
                             Stato.letto,
                             Stato.recensito,
-                          ].map<DropdownMenuItem<int>>((Stato value) {
-                            return DropdownMenuItem<int>(
-                              value: Stato.statoToInt(value),
+                          ].map<DropdownMenuItem<Stato>>((Stato value) {
+                            return DropdownMenuItem<Stato>(
+                              value: value,
                               child: Text(Stato.statoToString(value)),
                             );
                           }).toList(),
-                          onChanged: (int? newValue) {
+                          onChanged: (Stato? newValue) {
                             setState(() {
-                              optionValue = newValue ?? 0;
+                              optionValue = newValue ?? Stato.daComprare;
                             });
                           },
                         ),
@@ -100,6 +127,7 @@ class _RecensioneFormState extends State<RecensioneForm> {
                           },
                           itemCount: 5,
                           allowHalfRating: false,
+                          initialRating: votazione.toDouble(),
                         ),
                         const SizedBox(height: 10),
                         ElevatedButton(
@@ -111,12 +139,25 @@ class _RecensioneFormState extends State<RecensioneForm> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              RecensioneService.addRecensione(
-                                  widget.isbn,
-                                  _recensioneController.text,
-                                  votazione,
-                                  optionValue,
-                                  _periodoController.text);
+                              if (widget.aggiunta) {
+                                Provider.of<RecensioneProvider>(context,
+                                        listen: false)
+                                    .addRecensione(
+                                        widget.isbn,
+                                        _recensioneController.text,
+                                        votazione,
+                                        optionValue,
+                                        _periodoController.text);
+                              } else {
+                                Provider.of<RecensioneProvider>(context,
+                                        listen: false)
+                                    .modificaRecensione(
+                                        widget.libro.id,
+                                        _recensioneController.text,
+                                        votazione,
+                                        optionValue,
+                                        _periodoController.text);
+                              }
                               Navigator.pop(context);
                             }
                           },

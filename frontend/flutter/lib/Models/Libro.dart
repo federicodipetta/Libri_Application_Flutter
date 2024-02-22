@@ -1,3 +1,5 @@
+import 'package:code/Models/LibroMinimo.dart';
+
 class Libro {
   String isbn;
   String titolo;
@@ -61,5 +63,14 @@ class Libro {
 
   getId() {
     return id;
+  }
+
+  LibroMinimo toLibroMinimo() {
+    return LibroMinimo(
+      img: img,
+      titolo: titolo,
+      autori: autori,
+      id: id,
+    );
   }
 }

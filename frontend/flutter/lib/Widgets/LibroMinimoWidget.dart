@@ -1,5 +1,6 @@
 import 'package:code/Models/LibroMinimo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class LibroMinimoWidget extends StatelessWidget {
   final LibroMinimo libro;
@@ -17,7 +18,8 @@ class LibroMinimoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 200,
+              height: 150,
+              width: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(
@@ -56,19 +58,16 @@ class LibroMinimoWidget extends StatelessWidget {
   }
 
   Widget votoWidget(int voto) {
-    return Row(
-      children: [
-        for (var i = 0; i < voto; i++)
-          Icon(
+    return RatingBarIndicator(
+        itemBuilder: (context, index) {
+          return const Icon(
             Icons.star,
-            color: Colors.yellow,
-          ),
-        for (var i = 0; i < 5 - voto; i++)
-          Icon(
-            Icons.star,
-            color: Colors.grey,
-          ),
-      ],
-    );
+            color: Colors.amber,
+          );
+        },
+        rating: voto.toDouble(),
+        itemCount: 5,
+        itemSize: 25,
+        direction: Axis.horizontal);
   }
 }

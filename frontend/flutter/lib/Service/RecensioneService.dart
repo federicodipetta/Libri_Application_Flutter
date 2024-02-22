@@ -44,9 +44,9 @@ class RecensioneService {
     }
   }
 
-  static void addRecensione(String isbn, String recensione, int voto, int stato,
-      String periodo) async {
-    await http.post(Uri.http(url, "$controller/AddRecensione"),
+  static Future<bool> addRecensione(String isbn, String recensione, int voto,
+      int stato, String periodo) async {
+    var response = await http.post(Uri.http(url, "$controller/AddRecensione"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "idUtente": 1,
@@ -56,5 +56,29 @@ class RecensioneService {
           "stato": stato,
           "periodo": periodo
         }));
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> modificaRecensione(String idlibro, String recensione,
+      int votazione, int statoToInt, String periodo) async {
+    var response =
+        await http.put(Uri.http(url, "$controller/ModificaRecensione"),
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode({
+              "idUtente": 1,
+              "idLibro": idlibro,
+              "Recensione": recensione,
+              "voto": votazione,
+              "stato": statoToInt,
+              "periodo": periodo
+            }));
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> deleteRecensione(String id) async {
+    var x = await http.delete(Uri.http(url, "$controller/DeleteRecensione"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"idUtente": 1, "idLibro": id}));
+    return x.statusCode == 200;
   }
 }

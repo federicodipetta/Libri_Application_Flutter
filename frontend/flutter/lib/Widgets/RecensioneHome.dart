@@ -1,30 +1,41 @@
-import 'package:code/Service/RecensioneService.dart';
+import 'package:code/Providers/RecensioneProvider.dart';
+import 'package:code/Widgets/RecensioneForm.dart';
+import 'package:code/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 import '../Models/Libro.dart';
 
-class RecensioneHome extends StatelessWidget {
+class RecensioneHome extends StatefulWidget {
   final String id;
   final String title;
   const RecensioneHome({Key? key, required this.id, required this.title})
       : super(key: key);
+  @override
+  _stateRecensioneHome createState() => _stateRecensioneHome();
+}
+
+class _stateRecensioneHome extends State<RecensioneHome> {
+  bool _isDelete = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: FutureBuilder(
-          future: RecensioneService.getRecensione(this.id),
+          future: _isDelete
+              ? context.watch<RecensioneProvider>().getRecensione(widget.id)
+              : context.read<RecensioneProvider>().getRecensione(widget.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Hero(
-                tag: snapshot.data!.libro.id,
-                child: SingleChildScrollView(
-                  child: Padding(
+              return SingleChildScrollView(
+                child: Stack(children: [
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
@@ -76,15 +87,85 @@ class RecensioneHome extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 60,
+                        ),
                       ],
                     ),
                   ),
-                ),
+                  Positioned(
+                    bottom: 10,
+                    right: 10,
+                    child: FloatingActionButton(
+                      child: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RecensioneForm(
+                                      libro:
+                                          snapshot.data!.libro.toLibroMinimo(),
+                                      voto: snapshot.data!.voto,
+                                      isbn: snapshot.data!.libro.isbn,
+                                      recensione: snapshot.data!.recensione,
+                                      periodo: snapshot.data!.periodo,
+                                      valutazione: snapshot.data!.voto,
+                                      aggiunta: false,
+                                      stato: snapshot.data!.stato,
+                                    )));
+                      },
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 10,
+                      left: 10,
+                      child: FloatingActionButton(
+                        child: const Icon(Icons.delete),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Delete'),
+                                  content: const Text(
+                                      'Are you sure you want to delete this review?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel')),
+                                    TextButton(
+                                        onPressed: () {
+                                          Provider.of<RecensioneProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteRecensione(
+                                                  snapshot.data!.libro.id)
+                                              .then((value) =>
+                                                  Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LibriMain(
+                                                              title: 'l',
+                                                            )),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  ));
+                                        },
+                                        child: const Text('Delete'))
+                                  ],
+                                );
+                              });
+                        },
+                      ))
+                ]),
               );
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }
-            return Center(child: const CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }),
     );
   }
@@ -153,19 +234,16 @@ class RecensioneHome extends StatelessWidget {
   }
 
   Widget votoWidget(int voto) {
-    return Row(
-      children: [
-        for (var i = 0; i < voto; i++)
-          Icon(
+    return RatingBarIndicator(
+        itemBuilder: (context, index) {
+          return const Icon(
             Icons.star,
-            color: Colors.yellow,
-          ),
-        for (var i = 0; i < 5 - voto; i++)
-          Icon(
-            Icons.star,
-            color: Colors.grey,
-          ),
-      ],
-    );
+            color: Colors.amber,
+          );
+        },
+        rating: voto.toDouble(),
+        itemCount: 5,
+        itemSize: 25,
+        direction: Axis.horizontal);
   }
 }
