@@ -29,9 +29,9 @@ class _stateRecensioneHome extends State<RecensioneHome> {
         title: Text(widget.title),
       ),
       body: FutureBuilder(
-          future: _isDelete
+          future: !_isDelete
               ? context.watch<RecensioneProvider>().getRecensione(widget.id)
-              : context.read<RecensioneProvider>().getRecensione(widget.id),
+              : null,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return SingleChildScrollView(
@@ -122,6 +122,9 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                         heroTag: 'delete',
                         child: const Icon(Icons.delete),
                         onPressed: () {
+                          setState(() {
+                            _isDelete = true;
+                          });
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
