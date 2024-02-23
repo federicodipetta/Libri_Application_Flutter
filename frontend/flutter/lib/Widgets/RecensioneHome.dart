@@ -98,6 +98,7 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                     bottom: 10,
                     right: 10,
                     child: FloatingActionButton(
+                      heroTag: 'edit',
                       child: const Icon(Icons.edit),
                       onPressed: () {
                         Navigator.pushNamed(context, '/recensioneForm',
@@ -118,6 +119,7 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                       bottom: 10,
                       left: 10,
                       child: FloatingActionButton(
+                        heroTag: 'delete',
                         child: const Icon(Icons.delete),
                         onPressed: () {
                           showDialog(

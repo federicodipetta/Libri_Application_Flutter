@@ -12,8 +12,8 @@ class LoginScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            context.read<AuthProvider>().login('token');
+          onPressed: () async {
+            await context.read<AuthProvider>().login('token');
           },
           child: const Text("Login"),
         ),

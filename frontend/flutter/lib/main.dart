@@ -6,13 +6,13 @@ import 'package:code/Router.dart';
 import 'package:code/Service/LibriService.dart';
 import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LoginScreen.dart';
-import 'package:code/Widgets/QRScanner.dart';
-import 'package:code/Widgets/RecensioneForm.dart';
-import 'package:code/Widgets/SettingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  AuthProvider.init();
+  ThemeProvider.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => ThemeProvider()),
     ChangeNotifierProvider(create: (context) => AuthProvider()),

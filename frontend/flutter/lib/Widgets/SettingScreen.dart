@@ -44,7 +44,9 @@ class SettingScreen extends StatelessWidget {
                 }
               }),
               value: context.watch<ThemeProvider>().theme == ThemeMode.dark,
-              onChanged: (_) => context.read<ThemeProvider>().ChangeTheme())
+              onChanged: (_) =>
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .ChangeTheme())
         ],
       ),
     );
