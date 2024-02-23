@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Libri_application.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Libri_application.Models.Configurations
         {
             builder.ToTable("Libro");
             builder.HasKey(k => k.id);
+            builder.HasMany(l => l.categorie).WithMany(c => c.libri).UsingEntity("CategoriaLibro");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Libri_application.Models.Context;
 using Libri_application.Models.Entities;
+using Libri_application.Models.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,24 @@ namespace Libri_application.Test.Example
         {
             var ctx = new MyDbContext();
             Libro libro = new Libro();
-            libro.id = "1";
+            libro.id = "9";
             libro.autori = "autore";
             libro.titolo = "titolo";
             libro.editore = "editore";
             libro.anno = "2024";
             libro.descrizione = "descrizione";
-            ctx.Set<Libro>().Add(libro);
-            ctx.SaveChanges();
+            libro.isbn = "isbn";
+            libro.img = "img";
+            CategoriaRepository categoriaRepository = new CategoriaRepository(ctx);
+            //sono già presenti nel db
+            var c = new Categoria() { nome = "banana"};
+            var a = categoriaRepository.Get("mela");
+            var b = categoriaRepository.Get("pera");
+            libro.categorie = new List<Categoria> { a, b,c};
+            LibroRepository libroRepository = new LibroRepository(ctx);
+            libroRepository.Add(libro);
+            libroRepository.Save();
+
         }
     }
 }

@@ -26,9 +26,9 @@ namespace Libri_application.App.Controllers
 
         [HttpGet]
         [Route("GetLibro/{id}")]
-        public Libro GetLibro(string id)
+        public LibroDto GetLibro(string id)
         {
-            return _libroService.GetLibro(id);
+            return new LibroDto(_libroService.GetLibro(id));
         }
         [HttpPost]
         [Route("AddLibro")]

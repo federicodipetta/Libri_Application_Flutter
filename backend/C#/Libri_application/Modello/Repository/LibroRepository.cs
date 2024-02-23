@@ -1,5 +1,6 @@
 ﻿using Libri_application.Models.Context;
 using Libri_application.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Libri_application.Models.Repository
 
         public Libro GetLibroByIsbn(string isbn)
         {
-            return _ctx.Libro.Where(x => x.isbn == isbn).FirstOrDefault();
+            return _ctx.Libro.Include(x=>x.categorie).Where(x => x.isbn == isbn).FirstOrDefault();
         }
     }
     

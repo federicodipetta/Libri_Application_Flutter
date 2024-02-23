@@ -44,6 +44,12 @@ namespace Libri_application.LibriService
             l.descrizione = libro2.volumeInfo.description;
             l.img = libro2.volumeInfo.imageLinks.smallThumbnail;
             l.isbn = isbn;
+            l.categorie = libro2.volumeInfo.categories.ToList().Select(x =>
+            {
+                var c = new Categoria();
+                c.nome = x;
+                return c;
+            }).ToList();
             return l;                                                             
         }
 
@@ -62,6 +68,12 @@ namespace Libri_application.LibriService
             l.anno = libro.volumeInfo.publishedDate.Substring(0, 4);
             l.descrizione = libro.volumeInfo.description;
             l.img = libro.volumeInfo.imageLinks.smallThumbnail;
+            l.categorie = libro.volumeInfo.categories.ToList().Select(x =>
+            {
+                var c = new Categoria();
+                c.nome = x;
+                return c;
+            }).ToList();
             return l;
         }
 

@@ -63,6 +63,7 @@ namespace Libri_application.App
             builder.Services.AddScoped<LibroRepository>();
             builder.Services.AddScoped<RecensioneRepository>();
             builder.Services.AddScoped<UtenteRepository>();
+            builder.Services.AddScoped<CategoriaRepository>();
 
             var jwt = new JwtOption();
             builder.Configuration.GetSection("JwtAuthentication")

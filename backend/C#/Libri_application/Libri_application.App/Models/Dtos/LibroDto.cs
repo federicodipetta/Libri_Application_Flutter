@@ -13,7 +13,7 @@ namespace Libri_application.App.Models.Dtos
         public string descrizione { get; set; }
         public string editore { get; set; }
         public string anno { get; set; }
-
+        public string[] categorie { get; set; }
         public LibroDto(Libro libro)
         {
             id = libro.id;
@@ -24,6 +24,7 @@ namespace Libri_application.App.Models.Dtos
             descrizione = libro.descrizione;
             editore = libro.editore;
             anno = libro.anno;
+            categorie = libro.categorie.Select(c => c.nome).ToArray();
 
         }
     }

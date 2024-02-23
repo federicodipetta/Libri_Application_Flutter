@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Libri_application.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,27 @@ namespace Libri_application.LibriService.models.LibroDettagliato
         public Volumeinfo volumeInfo { get; set; }
         public Saleinfo saleInfo { get; set; }
         public Accessinfo accessInfo { get; set; }
+
+
+        public Libro toLibro()
+        {
+            Libro libro = new Libro();
+            libro.id = id;
+            libro.autori = volumeInfo.authors[0];
+            libro.titolo = volumeInfo.title;
+            libro.editore = volumeInfo.publisher;
+            libro.anno = volumeInfo.publishedDate;
+            libro.descrizione = volumeInfo.description;
+            libro.isbn = volumeInfo.industryIdentifiers[0].identifier;
+            libro.img = volumeInfo.imageLinks.thumbnail;
+            libro.categorie = volumeInfo.categories.ToList().Select(x =>
+            {
+                var c = new Categoria();
+                c.nome = x;
+                return c;
+            }).ToList();
+            return libro;
+        }
     }
 
     public class Volumeinfo

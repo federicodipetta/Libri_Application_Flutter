@@ -4,15 +4,18 @@ using global::Libri_application.Models.Entities;
 using Libri_application.LibriService.models;
 using Libri_application.Models.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 namespace Libri_application.App.Services
 {
     public class LibroService : ILibroService
     {
         private readonly LibroRepository _repo;
-        public LibroService(LibroRepository repo)
+        private readonly CategoriaRepository _repoC;
+        public LibroService(LibroRepository repo, CategoriaRepository repoC)
         {
             _repo = repo;
+            _repoC = repoC;
         }
         public async Task<bool> AggiungiLibro(string isbn)
         {
@@ -27,6 +30,10 @@ namespace Libri_application.App.Services
                 // Il libro non è presente nel database
                 var libriService = new LibriService.LibriService();
                 Libro libro = await libriService.GetLibro(isbn);
+                var categorie = libro.categorie.Where(x => _repoC.Contains(x.nome)).Select(x => _repoC.Get(x.nome));
+                libro.categorie=categorie.Concat(libro.categorie).DistinctBy(x=>x.nome).ToList();
+                
+
                 _repo.Add(libro);
                 _repo.Save();
                 return true;

@@ -17,5 +17,7 @@ namespace Libri_application.Models.Entities
         public string descrizione { get; set; }
         public string isbn { get; set; }
         public string img { get; set; }
+
+        public virtual ICollection<Categoria> categorie{ get; set; }
     }
 }
