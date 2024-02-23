@@ -2,6 +2,7 @@ import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Providers/AuthProvider.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Providers/ThemeProvider.dart';
+import 'package:code/Router.dart';
 import 'package:code/Service/LibriService.dart';
 import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/LoginScreen.dart';
@@ -28,9 +29,8 @@ class MyApp extends StatelessWidget {
       themeMode: context.watch<ThemeProvider>().theme,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: LibriMain(
-        title: title,
-      ),
+      initialRoute: '/',
+      onGenerateRoute: generateRoute,
     );
   }
 }
@@ -50,28 +50,22 @@ class LibriMain extends StatelessWidget {
                 title: const Text("Libri App"),
                 actions: [
                   IconButton(
-                      onPressed: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SettingScreen()))
-                          },
+                      onPressed: () =>
+                          {Navigator.of(context).pushNamed('/settings')},
                       icon: Icon(Icons.settings))
                 ],
               ),
               body: const LibreriaHome(),
               floatingActionButton: FloatingActionButton(
                 onPressed: () async {
-                  String isbn = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => QRScanner()));
+                  String isbn =
+                      await Navigator.of(context).pushNamed('/qr') ?? "";
                   if (!isbn.isEmpty) {
                     LibroMinimo libro =
                         await LibriService.getLibroRidotto(isbn);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecensioneForm(
-                                libro: libro, voto: 2, isbn: isbn)));
+                    Navigator.of(context).pushNamed('/recensioneForm',
+                        arguments: RecensioneFormInput(
+                            libro: libro, voto: 1, isbn: isbn, aggiunta: true));
                   }
                 },
                 child: const Icon(Icons.add),

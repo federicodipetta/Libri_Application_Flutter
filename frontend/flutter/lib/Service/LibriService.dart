@@ -1,7 +1,6 @@
 import "package:code/Models/LibroMinimo.dart";
 import "package:http/http.dart" as http;
 import "dart:convert";
-import 'package:code/Models/Libro.dart';
 
 class LibriService {
   static String url = "10.0.2.2:5073";

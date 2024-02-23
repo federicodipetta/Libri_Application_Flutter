@@ -1,6 +1,3 @@
-import 'package:code/Service/LibriService.dart';
-import 'package:code/Widgets/LibreriaHome.dart';
-import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

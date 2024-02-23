@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Models/Recensione.dart';
 import 'package:code/Models/RecensioneMinima.dart';
 import 'package:http/http.dart' as http;

@@ -1,8 +1,5 @@
-import 'package:code/Models/Libro.dart';
-import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
-import 'package:code/Service/LibriService.dart';
-import 'package:code/Service/RecensioneService.dart';
+import 'package:code/Router.dart';
 import 'package:code/Widgets/LibroMinimoWidget.dart';
 import 'package:code/Widgets/RecensioneHome.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +17,11 @@ class LibreriaHome extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RecensioneHome(
-                              id: snapshot.data![index].libro.id,
-                              title: snapshot.data![index].libro.titolo))),
+                  onTap: () => Navigator.of(context).pushNamed('/recensione',
+                      arguments: RecensioneInput(
+                        title: snapshot.data![index].libro.titolo,
+                        id: snapshot.data![index].libro.id,
+                      )),
                   child: LibroMinimoWidget(
                       libro: snapshot.data![index].libro,
                       voto: snapshot.data![index].voto),

@@ -1,4 +1,5 @@
 import 'package:code/Providers/RecensioneProvider.dart';
+import 'package:code/Router.dart';
 import 'package:code/Widgets/RecensioneForm.dart';
 import 'package:code/main.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,20 +100,17 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                     child: FloatingActionButton(
                       child: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RecensioneForm(
-                                      libro:
-                                          snapshot.data!.libro.toLibroMinimo(),
-                                      voto: snapshot.data!.voto,
-                                      isbn: snapshot.data!.libro.isbn,
-                                      recensione: snapshot.data!.recensione,
-                                      periodo: snapshot.data!.periodo,
-                                      valutazione: snapshot.data!.voto,
-                                      aggiunta: false,
-                                      stato: snapshot.data!.stato,
-                                    )));
+                        Navigator.pushNamed(context, '/recensioneForm',
+                            arguments: RecensioneFormInput(
+                              libro: snapshot.data!.libro.toLibroMinimo(),
+                              voto: snapshot.data!.voto,
+                              isbn: snapshot.data!.libro.isbn,
+                              recensione: snapshot.data!.recensione,
+                              periodo: snapshot.data!.periodo,
+                              valutazione: snapshot.data!.voto,
+                              aggiunta: false,
+                              stato: snapshot.data!.stato,
+                            ));
                       },
                     ),
                   ),
@@ -142,14 +140,10 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                                                   listen: false)
                                               .deleteRecensione(
                                                   snapshot.data!.libro.id)
-                                              .then((value) =>
-                                                  Navigator.pushAndRemoveUntil(
+                                              .then((value) => Navigator
+                                                      .pushNamedAndRemoveUntil(
                                                     context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            LibriMain(
-                                                              title: 'l',
-                                                            )),
+                                                    '/',
                                                     (Route<dynamic> route) =>
                                                         false,
                                                   ));

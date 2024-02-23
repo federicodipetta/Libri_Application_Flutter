@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
 import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Models/Stato.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
-import 'package:code/Service/RecensioneService.dart';
 import 'package:code/Widgets/LibroMinimoWidget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
