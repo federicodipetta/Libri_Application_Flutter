@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
 
 class LibriMain extends StatelessWidget {
   final String title;
-  LibriMain({Key? key, required this.title}) : super(key: key);
+  const LibriMain({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
