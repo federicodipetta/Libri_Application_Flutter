@@ -1,5 +1,6 @@
 import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Models/Stato.dart';
+import 'package:code/Providers/AuthProvider.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Widgets/LibroMinimoWidget.dart';
 import 'package:flutter/material.dart';

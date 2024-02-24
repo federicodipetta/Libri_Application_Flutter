@@ -13,10 +13,12 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   AuthProvider.init();
   ThemeProvider.init();
+  var auth = AuthProvider();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => ThemeProvider()),
-    ChangeNotifierProvider(create: (context) => AuthProvider()),
-    ChangeNotifierProvider(create: (context) => RecensioneProvider()),
+    ChangeNotifierProvider(create: (context) => auth),
+    ChangeNotifierProvider(
+        create: (context) => RecensioneProvider(authProvider: auth))
   ], child: MyApp()));
 }
 
@@ -41,8 +43,8 @@ class LibriMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !context.watch<AuthProvider>().isLogged
-        ? const LoginScreen()
+    return !context.watch<AuthProvider>().token.isNotEmpty
+        ? LoginScreen()
         : DefaultTabController(
             length: 2,
             child: Scaffold(

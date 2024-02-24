@@ -1,11 +1,17 @@
 ﻿using Libri_application.App.Abstractions.Services;
+using Libri_application.App.Factorys;
 using Libri_application.App.Models.Dtos;
+using Libri_application.App.Models.Exception;
+using Libri_application.App.Models.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Libri_application.App.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class AutenticazioneController : ControllerBase
     {
@@ -15,33 +21,37 @@ namespace Libri_application.App.Controllers
             _service = service;
         }
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserDto user)
+        public IActionResult Login([FromBody] LoginRequest user)
         {
-            var token = _service.Login(user.Username, user.Password);
-            if (token == null)
+            try
             {
-                return Unauthorized();
-            }
-            return Ok(token);
-        }
-        [HttpPost("logout")]
-        public IActionResult Logout([FromBody] UserDto user)
-        {
-            if (_service.Logout(user.Username))
+                var token = _service.Login(user.login, user.password);
+                return Ok(token);
+                
+            } catch (MyException e)
             {
-                return Ok();
+                return BadRequest(Factorys.ResponseFactory.WithError(e.Message));
+            }catch(System.Exception e)
+            {
+                return BadRequest(Factorys.ResponseFactory.WithError(e));
             }
-            return NotFound();
+
+            
         }
+
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserDto user)
+        public IActionResult Register([FromBody] RegisterRequest user)
         {
-            var token = _service.Register(user.Username, user.Password, user.Mail);
-            if (token == null)
+            try
             {
-                return BadRequest();
+                var token = _service.Register(user.username, user.password, user.email);
+                return Ok(token);
             }
-            return Ok(token);
+            catch (Exception e)
+            {
+                return BadRequest(Factorys.ResponseFactory.WithError(e));
+            }
+            
         }   
     }
 }

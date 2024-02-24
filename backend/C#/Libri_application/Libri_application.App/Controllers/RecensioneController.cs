@@ -4,13 +4,17 @@ using Libri_application.App.Models.Dtos;
 using Libri_application.App.Models.Requests;
 using Libri_application.App.Models.Responses;
 using Libri_application.Models.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Libri_application.App.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class RecensioneController : ControllerBase
     {
         private readonly IRecensioneService _recensioneService;
@@ -21,10 +25,12 @@ namespace Libri_application.App.Controllers
         }
 
         [HttpGet]
-        [Route("GetRecensione/{idU:int}/{idL}")]
-        public IActionResult GetRecensione(int idU, string idL)
+        [Route("GetRecensione/{idL}")]
+        public IActionResult GetRecensione(string idL)
         {
-            var recensione = _recensioneService.GetRecensioneByLibro(idU, idL);
+            var identity = this.User.Identity as ClaimsIdentity;
+            var idU = int.Parse(identity.Claims.Where(c => "Id" == c.Type).FirstOrDefault().Value);
+            var recensione = _recensioneService.GetRecensioneByLibro(idU , idL);
             var response = new RecensioneCompletaResonse();
             response.recensione = new RecensioneDto(recensione);
             response.libro = new LibroDto(recensione.libro);
@@ -36,7 +42,10 @@ namespace Libri_application.App.Controllers
         [Route("AddRecensione")]
         public async Task<IActionResult> AddRecensione(RecensioneRequest recensione)
         {
-            await _recensioneService.AggiungiRecensione(recensione.isbn,recensione.ToRecensione());
+
+            var identity = this.User.Identity as ClaimsIdentity;
+            var idU = int.Parse(identity.Claims.Where(c => "Id" == c.Type).FirstOrDefault().Value);
+            await _recensioneService.AggiungiRecensione(recensione.isbn,recensione.ToRecensione(idU));
             return Ok();
         }
 
@@ -44,16 +53,21 @@ namespace Libri_application.App.Controllers
         [Route("DeleteRecensione")]
         public IActionResult DeleteRecensione(RecensioneDelete recensione)
         {
-            _recensioneService.EliminaRecensione(recensione.ToRecensione());
+
+            var identity = this.User.Identity as ClaimsIdentity;
+            var idU = int.Parse(identity.Claims.Where(c => "Id" == c.Type).FirstOrDefault().Value);
+            _recensioneService.EliminaRecensione(recensione.ToRecensione(idU));
             return Ok();
         }
 
         [HttpGet]
-        [Route("GetRecensioni/{idU:int}")]
-        public List<RecensioneRidottaDto> GetRecensioni(int idU)
+        [Route("GetRecensioni")]
+        public List<RecensioneRidottaDto> GetRecensioni()
         {
-            var recensioni =  _recensioneService.GetRecensioni(idU);
 
+            var identity = this.User.Identity as ClaimsIdentity;
+            var idU = int.Parse(identity.Claims.Where(c => "Id" == c.Type).FirstOrDefault().Value);
+            var recensioni = _recensioneService.GetRecensioni(idU);
             return recensioni.Select(x => new RecensioneRidottaDto(x)).ToList();
         }
 
@@ -61,8 +75,11 @@ namespace Libri_application.App.Controllers
         [Route("ModificaRecensione")]
         public IActionResult ModificaRecensione(ModificaRecensioneRequest recensione)
         {
-            _recensioneService.ModificaRecensione(recensione.ToRecensione());
-            return Ok();
+
+            var identity = this.User.Identity as ClaimsIdentity;
+            var idU = int.Parse(identity.Claims.Where(c => "Id" == c.Type).FirstOrDefault().Value);
+            _recensioneService.ModificaRecensione(recensione.ToRecensione(idU));
+            return Ok(ResponseFactory.WithSuccess("modifica avvenuta con successo"));
         }
 
     }

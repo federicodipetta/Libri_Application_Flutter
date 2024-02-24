@@ -4,7 +4,6 @@ namespace Libri_application.App.Models.Requests
 {
     public class ModificaRecensioneRequest
     {
-        public int idUtente { get; set; }
         public string idLibro { get; set; }
         public string recensione { get; set; }
         public int voto { get; set; }
@@ -13,7 +12,7 @@ namespace Libri_application.App.Models.Requests
 
         public string periodo { get; set; }
 
-        public Recensione ToRecensione()
+        public Recensione ToRecensione(int idUtente)
         {
             Recensione recensione = new Recensione();
             recensione.idUtente= idUtente;

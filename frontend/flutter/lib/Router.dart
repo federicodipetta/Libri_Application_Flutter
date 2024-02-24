@@ -5,6 +5,7 @@ import 'package:code/Widgets/LibreriaHome.dart';
 import 'package:code/Widgets/QRScanner.dart';
 import 'package:code/Widgets/RecensioneForm.dart';
 import 'package:code/Widgets/RecensioneHome.dart';
+import 'package:code/Widgets/RegistrationScreen.dart';
 import 'package:code/Widgets/SettingScreen.dart';
 import 'package:code/main.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       }
     case '/settings':
       return MaterialPageRoute(builder: (_) => const SettingScreen());
+
+    case '/register':
+      return MaterialPageRoute(builder: (_) => RegistrationScreen());
 
     default:
       return materialPageRouteError("Route not found");

@@ -1,4 +1,5 @@
 ﻿using Libri_application.App.Abstractions.Services;
+using Libri_application.App.Models.Exception;
 using Libri_application.App.Options;
 using Libri_application.Models.Entities;
 using Libri_application.Models.Repository;
@@ -27,18 +28,13 @@ namespace Libri_application.App.Services
             var utente = _repoU.GetByLogin(username);
             if(utente == null)
             {
-                return "utente non trovato";
+                throw new MyException("utente non trovato");
             }
             if (CheckPassword(password,utente.salt,utente.password))
             {
                 return GenerateToken(utente);
-            }else return "utente corretto ma password errata";
+            }else throw new MyException("utente corretto ma password errata");
            
-        }
-
-        public bool Logout(string username)
-        {
-            throw new NotImplementedException();
         }
         public string Register(string username, string password, string mail)
         {

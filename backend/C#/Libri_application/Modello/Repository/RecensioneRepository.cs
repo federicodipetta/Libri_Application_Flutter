@@ -27,6 +27,7 @@ namespace Libri_application.Models.Repository
             return _ctx.Set<Recensione>()
                 .Include(x => x.libro)
                 .Include(x=> x.utente)
+                .Include(x=>x.libro.categorie)
                 .Where(x => x.idUtente == idUtente && x.idLibro == idLibro)
                 .FirstOrDefault();
         }
