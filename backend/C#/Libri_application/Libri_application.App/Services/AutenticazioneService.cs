@@ -3,6 +3,7 @@ using Libri_application.App.Models.Exception;
 using Libri_application.App.Options;
 using Libri_application.Models.Entities;
 using Libri_application.Models.Repository;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,6 +23,7 @@ namespace Libri_application.App.Services
         {
             _repoU = repository;
             _jwt = option.Value;
+
         }
         public string Login(string username, string password)
         {

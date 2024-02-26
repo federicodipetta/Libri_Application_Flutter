@@ -32,13 +32,12 @@ namespace Libri_application.App.Services
                 Libro libro = await libriService.GetLibro(isbn);
                 var categorie = libro.categorie
                     .Where(x => _repoC.Contains(x.nome))
-                    .Select(x => _repoC.Get(x.nome));
+                    .Select(x => _repoC.Get(x.nome)).ToList();
                 libro.categorie=categorie
                     .Concat(
-                    libro.categorie
-                    .Where(x=> !categorie.Contains(x))
-                    )
-                    .ToList();
+                    libro.categorie.Where(x => !_repoC.Contains(x.nome))
+                    ).Distinct().ToList();
+                    
                 
 
                 _repo.Add(libro);

@@ -10,26 +10,22 @@ namespace Libri_application.App.Services
         private readonly RecensioneRepository _repoR;
         private readonly LibroRepository _repoL;
         private readonly UtenteRepository _repoU;
+        private readonly ILibroService _libroService;
         public RecensioneService(RecensioneRepository repoR, LibroRepository repoL, UtenteRepository repoU
-           )
+           ,ILibroService libroService)
         {
             _repoL = repoL;
             _repoR = repoR;
             _repoU = repoU;
+            _libroService = libroService;
         }
 
         public async Task<bool>  AggiungiRecensione(string isbn, Recensione recensione)
         {
             if(_repoL.GetLibroByIsbn(isbn) == null)
             {
-                var libriService = new LibriService.LibriService();
-                Libro Libro = await libriService.GetLibro(isbn);
-                if (Libro != null)
-                {
-                    _repoL.Add(Libro);
-                    _repoL.Save();
-                }
-                else return false;
+                await _libroService.AggiungiLibro(isbn);
+                
             }
             var libro = _repoL.GetLibroByIsbn(isbn);
             recensione.idLibro = libro.id;

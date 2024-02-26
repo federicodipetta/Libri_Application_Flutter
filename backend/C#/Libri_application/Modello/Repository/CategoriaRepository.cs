@@ -16,7 +16,7 @@ namespace Libri_application.Models.Repository
 
         public bool Contains(string nome)
         {
-            return _ctx.Set<Categoria>().Any(c => c.nome == nome);
+            return _ctx.Set<Categoria>().Where(c => c.nome == nome).Count()>=1;
         }
 
     }
