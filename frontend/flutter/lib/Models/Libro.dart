@@ -9,15 +9,19 @@ class Libro {
   String descrizione;
   String editore;
   String anno;
-  Libro(
-      {required this.isbn,
-      required this.titolo,
-      required this.autori,
-      required this.id,
-      required this.img,
-      required this.descrizione,
-      required this.editore,
-      required this.anno});
+  List<String> categorie = [];
+
+  Libro({
+    required this.isbn,
+    required this.titolo,
+    required this.autori,
+    required this.id,
+    required this.img,
+    required this.descrizione,
+    required this.editore,
+    required this.anno,
+    required this.categorie,
+  });
 
   factory Libro.fromJson(Map<String, dynamic> json) {
     return Libro(
@@ -29,6 +33,8 @@ class Libro {
       descrizione: json['descrizione'],
       editore: json['editore'],
       anno: json['anno'],
+      categorie:
+          (json['categorie'] as List).map((x) => x.toString().trim()).toList(),
     );
   }
   factory Libro.defaultLibro() {
@@ -41,6 +47,7 @@ class Libro {
       descrizione: "",
       editore: "",
       anno: "",
+      categorie: [],
     );
   }
 
@@ -54,6 +61,7 @@ class Libro {
       'descrizione': descrizione,
       'editore': editore,
       'anno': anno,
+      'categorie': categorie,
     };
   }
 

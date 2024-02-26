@@ -16,6 +16,11 @@ namespace Libri_application.Models.Repository
         {
 
         }
+
+        public override Libro Get(object id)
+        {
+            return _ctx.Set<Libro>().Include(c=>c.categorie).Where(x => x.id == id).FirstOrDefault();
+        }
         public bool Contains(string isbn)
         {
             return _ctx.Set<Libro>().Any(c => c.isbn == isbn);

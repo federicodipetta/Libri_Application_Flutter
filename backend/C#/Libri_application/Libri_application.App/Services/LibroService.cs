@@ -30,8 +30,15 @@ namespace Libri_application.App.Services
                 // Il libro non è presente nel database
                 var libriService = new LibriService.LibriService();
                 Libro libro = await libriService.GetLibro(isbn);
-                var categorie = libro.categorie.Where(x => _repoC.Contains(x.nome)).Select(x => _repoC.Get(x.nome));
-                libro.categorie=categorie.Concat(libro.categorie).DistinctBy(x=>x.nome).ToList();
+                var categorie = libro.categorie
+                    .Where(x => _repoC.Contains(x.nome))
+                    .Select(x => _repoC.Get(x.nome));
+                libro.categorie=categorie
+                    .Concat(
+                    libro.categorie
+                    .Where(x=> !categorie.Contains(x))
+                    )
+                    .ToList();
                 
 
                 _repo.Add(libro);

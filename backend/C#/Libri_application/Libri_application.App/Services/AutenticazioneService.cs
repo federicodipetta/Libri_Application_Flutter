@@ -77,7 +77,7 @@ namespace Libri_application.App.Services
                 _jwt.Issuer,
                 null,
                 claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddDays(90),
                 signingCredentials :creds
                 );
             return new JwtSecurityTokenHandler().WriteToken(securtyyoken);

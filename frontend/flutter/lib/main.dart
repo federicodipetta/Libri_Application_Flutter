@@ -2,6 +2,7 @@ import 'package:code/Models/LibroMinimo.dart';
 import 'package:code/Providers/AuthProvider.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
 import 'package:code/Providers/ThemeProvider.dart';
+import 'package:code/Providers/UtenteProvider.dart';
 import 'package:code/Router.dart';
 import 'package:code/Service/LibriService.dart';
 import 'package:code/Widgets/LibreriaHome.dart';
@@ -18,7 +19,9 @@ void main() {
     ChangeNotifierProvider(create: (context) => ThemeProvider()),
     ChangeNotifierProvider(create: (context) => auth),
     ChangeNotifierProvider(
-        create: (context) => RecensioneProvider(authProvider: auth))
+        create: (context) => RecensioneProvider(authProvider: auth)),
+    ChangeNotifierProvider(
+        create: (context) => UtenteProvider(authProvider: auth))
   ], child: MyApp()));
 }
 

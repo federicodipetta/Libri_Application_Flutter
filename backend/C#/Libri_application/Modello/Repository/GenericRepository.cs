@@ -16,7 +16,7 @@ namespace Libri_application.Models.Repository
             _ctx = ctx;
         }
 
-        public T Get(object id)
+        public virtual T Get(object id)
         {
             return _ctx.Set<T>().Find(id);
         }

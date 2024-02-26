@@ -40,29 +40,32 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        libro(
-                            context, snapshot.data!.libro, snapshot.data!.voto),
-                        const SizedBox(height: 10),
                         Card(
-                          color: Theme.of(context).cardColor,
-                          elevation: 2,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  'Descrizione',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  snapshot.data!.libro.descrizione,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
-                            ),
+                            child: Column(children: [
+                              libro(context, snapshot.data!.libro,
+                                  snapshot.data!.voto),
+                              const SizedBox(height: 4),
+                              categorie(snapshot.data!.libro.categorie),
+                              Text(
+                                'Descrizione',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const SizedBox(height: 5),
+                              ExpansionTile(
+                                title: Text(
+                                    'Descrizione \n${snapshot.data!.libro.descrizione.substring(0, 40)}...'),
+                                children: [
+                                  Text(
+                                    snapshot.data!.libro.descrizione,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                    textAlign: TextAlign.justify,
+                                  )
+                                ],
+                              ),
+                            ]),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -75,7 +78,17 @@ class _stateRecensioneHome extends State<RecensioneHome> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Text(
-                                  'Review',
+                                  'Periodo',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  snapshot.data!.periodo,
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Recensione',
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const SizedBox(height: 5),
@@ -170,65 +183,58 @@ class _stateRecensioneHome extends State<RecensioneHome> {
   }
 
   Widget libro(BuildContext context, Libro libro, int voto) {
-    return Card(
-      color: Theme.of(context).cardColor,
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.secondary,
-                  width: 2.3,
-                ),
-              ),
-              child: Image.network(
-                libro.img,
-                fit: BoxFit.cover,
-              ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 2.3,
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    libro.titolo,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    libro.autori.join(", "),
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    'isbn : ' + libro.isbn,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    libro.editore,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    libro.anno,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 5),
-                  votoWidget(voto),
-                ],
-              ),
-            ),
-          ],
+          ),
+          child: Image.network(
+            libro.img,
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                libro.titolo,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                libro.autori.join(", "),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                'isbn : ' + libro.isbn,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                libro.editore,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 5),
+              Text(
+                libro.anno,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 5),
+              votoWidget(voto),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -244,5 +250,21 @@ class _stateRecensioneHome extends State<RecensioneHome> {
         itemCount: 5,
         itemSize: 25,
         direction: Axis.horizontal);
+  }
+
+  Widget categorie(List<String> categorie) {
+    return SizedBox(
+      height: 40,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categorie.length,
+        itemBuilder: (context, index) {
+          return Chip(
+            //labelStyle: Theme.of(context).textTheme.bodyLarge,
+            label: Text(categorie[index]),
+          );
+        },
+      ),
+    );
   }
 }

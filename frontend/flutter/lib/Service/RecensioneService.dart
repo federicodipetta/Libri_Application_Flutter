@@ -72,7 +72,6 @@ class RecensioneService {
           "authorization": "Bearer $token"
         },
         body: jsonEncode({
-          "idUtente": 1,
           "idLibro": idlibro,
           "Recensione": recensione,
           "voto": votazione,

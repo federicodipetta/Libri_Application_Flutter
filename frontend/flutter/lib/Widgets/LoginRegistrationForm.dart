@@ -1,5 +1,6 @@
 import 'package:code/Providers/AuthProvider.dart';
 import 'package:code/Providers/RecensioneProvider.dart';
+import 'package:code/Providers/UtenteProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,20 +30,24 @@ class _LoginRegistrationFormState extends State<LoginRegistrationForm> {
             if (!widget.isLogin)
               TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
-                  if (value!.isEmpty && !value.contains('@')) {
+                  if (widget.isLogin) return null;
+                  if (value!.isEmpty) {
                     return 'Please enter your email';
+                  }
+                  if (!value.contains('@') || !value.contains('.')) {
+                    return 'Please enter a valid email';
                   }
                   return null;
                 },
               ),
             TextFormField(
               controller: usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
               ),
               validator: (value) {
@@ -54,20 +59,23 @@ class _LoginRegistrationFormState extends State<LoginRegistrationForm> {
             ),
             TextFormField(
               controller: passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
               ),
               obscureText: true,
               validator: (value) {
-                if (value!.isEmpty && value.length < 8 && value.length > 20) {
+                if (value!.isEmpty)
+                  return "il campo password non può essere vuoto";
+                if (widget.isLogin) return null;
+                if (value.length < 8 || value.length > 20) {
                   return 'la password deve essere tra 8 e 20 caratteri';
                 }
                 if (value.contains(' ') || value.contains('\t')) {
                   return 'la password non deve contenere spazi';
                 }
-                if (value.contains(RegExp(r'[A-Z]')) &&
-                    value.contains(RegExp(r'[a-z]')) &&
-                    value.contains(RegExp(r'[0-9]'))) {
+                if (!value.contains(RegExp(r'[A-Z]')) ||
+                    !value.contains(RegExp(r'[a-z]')) ||
+                    !value.contains(RegExp(r'[0-9]'))) {
                   return 'la password deve contenere almeno una lettera maiuscola, una minuscola e un numero';
                 }
 
@@ -103,6 +111,8 @@ class _LoginRegistrationFormState extends State<LoginRegistrationForm> {
           passwordController.text,
         );
         if (a) {
+          await Provider.of<UtenteProvider>(context, listen: false)
+              .fetchUtente();
           await Provider.of<RecensioneProvider>(context, listen: false)
               .getRecensioni();
         }
@@ -114,8 +124,11 @@ class _LoginRegistrationFormState extends State<LoginRegistrationForm> {
           emailController.text,
         );
         if (a) {
+          await Provider.of<UtenteProvider>(context, listen: false)
+              .fetchUtente();
           await Provider.of<RecensioneProvider>(context, listen: false)
               .getRecensioni();
+
           Navigator.pop(context);
         }
       }
