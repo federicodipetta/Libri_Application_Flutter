@@ -19,7 +19,7 @@ class AuthService {
 
   static Future<String> register(
       String login, String password, String email) async {
-    var response = await http.post(Uri.http('$url$controller/register'),
+    var response = await http.post(Uri.http(url, '$controller/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(
             {'username': login, 'password': password, 'email': email}));
