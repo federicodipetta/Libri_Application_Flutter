@@ -259,9 +259,13 @@ class _stateRecensioneHome extends State<RecensioneHome> {
         scrollDirection: Axis.horizontal,
         itemCount: categorie.length,
         itemBuilder: (context, index) {
-          return Chip(
-            //labelStyle: Theme.of(context).textTheme.bodyLarge,
-            label: Text(categorie[index]),
+          return Padding(
+            padding: const EdgeInsets.all(2),
+            child: Chip(
+              padding: const EdgeInsets.all(2),
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              label: Text(categorie[index]),
+            ),
           );
         },
       ),

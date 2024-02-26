@@ -1,14 +1,17 @@
 using Libri_application.App.Abstractions.Services;
+using Libri_application.App.Factorys;
 using Libri_application.App.Options;
 using Libri_application.App.Services;
 using Libri_application.LibriService.models;
 using Libri_application.Models.Context;
 using Libri_application.Models.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Net;
 using System.Text;
 
 namespace Libri_application.App
@@ -103,10 +106,27 @@ namespace Libri_application.App
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
 
-
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature != null)
+                    {
+                        var res = ResponseFactory
+                            .WithError(contextFeature.Error);
+                        await context.Response.WriteAsJsonAsync(
+                            res
+                            );
+                    }
+                });
+            });
             app.MapControllers();
 
             app.Run();
